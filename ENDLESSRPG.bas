@@ -110,43 +110,44 @@ do
             PRINT "you got " ;NumXP; " XP"
             PRINT "and " ;NumGold; " GOLD"
             GameRound = GameRound + 1
-
-IF GameRound MOD 2 = 0 THEN
-PRINT "HI!Welcome to my shop where you can buy ITEMS,ARMOR and WEAPONS"
-PRINT "1. Amongus potion"
-PRINT "This potion is so toxic that it insta-kills EVERYTHING"
-PRINT "COST:10 GOLD"
-PRINT "2. TEST_ITEM"
-PRINT "Is abble to make ANYTHING sleep,i can't even describe what shape it is"
-PRINT "COST:7 GOLD"
-PRINT "3. goofy ahh sword"
-PRINT "Big sword,bigger attack"
-PRINT "COST:25 GOLD"
-PRINT "OKIDK"
-PRINT "0. Exit"
-DO
-    INPUT "Enter the number of the creature: "; choice
-    SELECT CASE choice
-        CASE 1
-            GOSUB 200
-        CASE 2
-            GOSUB 210
-        CASE 3
-            GOSUB 220
-        CASE 0
-            END
-        CASE ELSE
-            PRINT "Invalid choice. Please enter a number from the menu."
-    END SELECT
-LOOP UNTIL TRUE
-
-200 REM Entry for Kaiju
-Item1Name$="sussy juice(amogus potion)"
-RETURN
-end if
             ' go to the next round
             exit do
         end if
+
+        IF GameRound MOD 2 = 0 THEN
+            PRINT "HI!Welcome to my shop where you can buy ITEMS,ARMOR and WEAPONS"
+            PRINT "1. Amongus potion"
+            PRINT "This potion is so toxic that it insta-kills EVERYTHING"
+            PRINT "COST:10 GOLD"
+            PRINT "2. TEST_ITEM"
+            PRINT "Is abble to make ANYTHING sleep,i can't even describe what shape it is"
+            PRINT "COST:7 GOLD"
+            PRINT "3. goofy ahh sword"
+            PRINT "Big sword,bigger attack"
+            PRINT "COST:25 GOLD"
+            PRINT "OKIDK"
+            PRINT "0. Exit"
+            DO
+                INPUT "Enter the number of the creature: "; choice
+                SELECT CASE choice
+                    CASE 1
+                        GOSUB 200
+                    CASE 2
+                        GOSUB 210
+                    CASE 3
+                        GOSUB 220
+                    CASE 0
+                        END
+                    CASE ELSE
+                        PRINT "Invalid choice. Please enter a number from the menu."
+                END SELECT
+            LOOP UNTIL TRUE
+
+            200 REM Entry for Kaiju
+                Item1Name$="sussy juice(amogus potion)"
+                RETURN
+        end if
+
     LOOP UNTIL TRUE
 
     if YourHealth <= 0 then
