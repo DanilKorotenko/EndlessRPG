@@ -8,6 +8,8 @@ PlayerWepaon$ = "Stick"
 
 PlayerArmor$ = "Bandage"
 
+YourHealth = 20 + (NumXP - 1) * 4
+
 PlayerATK = 2
 
 PlayerDF = 1
@@ -18,22 +20,21 @@ PlayerDF = 1
 
 DummySpare = 1
 
-
 DummyHappy = 1
 
-DummyName$ = "Dummy"
+DummyName$ = "Froggit"
 
-DummyDialogue$ = "..."
+DummyDialogue$ = "Ribbit,Ribbit"
 
 
 
 ' Item Variables
 
-Item1 = 2
+Item1 = int(rnd(1)*5)
 
 Item1Name$ = "Crab Apple"
 
-Item2 = 3
+Item2 = int(rnd(1)*4)
 
 Item2Name$ = "Sea Tea"
 
@@ -41,11 +42,11 @@ Item3 = 1
 
 Item3Name$ = "Cinnamon-Buttersctotch Pie"
 
-Item4 = 5
+Item4 = int(rnd(1)*2)
 
 Item4Name$ = "Monster Candy"
 
-Item5 = 3
+Item5 = int(rnd(1)*7)
 
 Item5Name$ = "Spider Donut"
 
@@ -58,7 +59,6 @@ GameRound = 0
 'round loop
 do
     print "Round: "; GameRound
-    YourHealth = 20 + (NumXP - 1) * 4
 
     print "your health: "; YourHealth
 
@@ -111,6 +111,39 @@ do
             PRINT "and " ;NumGold; " GOLD"
             GameRound = GameRound + 1
 
+IF GameRound MOD 2 = 0 THEN
+PRINT "HI!Welcome to my shop where you can buy ITEMS,ARMOR and WEAPONS"
+PRINT "1. Amongus potion"
+PRINT "This potion is so toxic that it insta-kills EVERYTHING"
+PRINT "COST:10 GOLD"
+PRINT "2. TEST_ITEM"
+PRINT "Is abble to make ANYTHING sleep,i can't even describe what shape it is"
+PRINT "COST:7 GOLD"
+PRINT "3. goofy ahh sword"
+PRINT "Big sword,bigger attack"
+PRINT "COST:25 GOLD"
+PRINT "OKIDK"
+PRINT "0. Exit"
+DO
+    INPUT "Enter the number of the creature: "; choice
+    SELECT CASE choice
+        CASE 1
+            GOSUB 200
+        CASE 2
+            GOSUB 210
+        CASE 3
+            GOSUB 220
+        CASE 0
+            END
+        CASE ELSE
+            PRINT "Invalid choice. Please enter a number from the menu."
+    END SELECT
+LOOP UNTIL TRUE
+
+200 REM Entry for Kaiju
+Item1Name$="sussy juice(amogus potion)"
+RETURN
+end if
             ' go to the next round
             exit do
         end if
@@ -125,15 +158,13 @@ LOOP UNTIL TRUE
 END
 
 300 REM
-    PRINT DummyName$
     RandomDamege=int(rnd(1)*5)
-    RandomDamege=RandomDamege+PlayerATK
-    PRINT "took "; RandomDamege; " damege!"
-    DummyHealth=DummyHealth - RandomDamege
-    PRINT "DummyHealth "; DummyHealth
+    PRINT "You got "; RandomDamege ; " damage!"
+    RandomDamege=RandomDamege-PlayerDF
+    YourHealth=YourHealth-RandomDamege-PlayerDF
+    PRINT "YourHealth "; YourHealth
     RandomDamege=int(rnd(1)*5)
-    RandomDamege=int(rnd(1)*5)
-    PRINT "You got "; RandomDamege; " damege!"
+    PRINT "You got "; RandomDamege; " damage!"
     RandomDamege=RandomDamege-PlayerDF
     YourHealth=YourHealth-RandomDamege-PlayerDF
     PRINT "YourHealth "; YourHealth
@@ -144,7 +175,7 @@ RETURN
     PRINT "It seems flattered"
     DummyHappy = DummyHappy - 1
     RandomDamege=int(rnd(1)*5)
-    PRINT "You got "; RandomDamege ; " damege!"
+    PRINT "You got "; RandomDamege ; " damage!"
     RandomDamege=RandomDamege-PlayerDF
     YourHealth=YourHealth-RandomDamege-PlayerDF
     PRINT "YourHealth "; YourHealth
@@ -187,7 +218,7 @@ RETURN
 
 110 REM
     IF Item2>0 THEN
-        YourHealth=YourHealth+7
+        YourHealth=YourHealth+8
         PRINT "Your Health ";YourHealth
         Item2=Item2-1
     ELSE
@@ -197,7 +228,7 @@ RETURN
 
 120 REM
     IF Item3>0 THEN
-        YourHealth=YourHealth+20
+        YourHealth=YourHealth+21
         PRINT "Your Health ";YourHealth
         Item3=Item3-1
     ELSE
@@ -207,7 +238,7 @@ RETURN
 
 130 REM
     IF Item4>0 THEN
-        YourHealth=YourHealth+3
+        YourHealth=YourHealth+5
         PRINT "Your Health ";YourHealth
         Item4=Item4-1
     ELSE
@@ -217,7 +248,7 @@ RETURN
 
 140 REM
     IF Item5>0 THEN
-        YourHealth=YourHealth+10
+        YourHealth=YourHealth+11
         PRINT "Your Health ";YourHealth
         Item5=Item5-1
     ELSE
@@ -229,7 +260,7 @@ RETURN
     IF DummySpare>0 THEN
         PRINT DummyName$; " is too angry to be spared"
         RandomDamege=int(rnd(1)*5)
-        PRINT "You got "; RandomDamege; " damege!"
+        PRINT "You got "; RandomDamege; " damage!"
         RandomDamege=RandomDamege-PlayerDF
         YourHealth=YourHealth-RandomDamege-PlayerDF
         PRINT "YourHealth "; YourHealth
