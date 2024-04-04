@@ -1,14 +1,16 @@
 ' Item Variables
 global ItemsSize
 ItemsSize = 5 ' this variable should contain total number of all items
+global ArmorsSize
+ArmorsSize = 4
 ' Player Variables
 global YourHealth
 global NumXP
 global NumGold
 global PlayerWepaon$
-global PlayerArmor$
 global PlayerATK
-global PlayerDF
+global PlayerCurrentArmor ' an index of current player armor from armors array
+call initPlayerVariables
 ' this is an array of items quatities. it has the same size as ItemsSize, the items in this array is quantities of items in player inventory
 global PlayerInventoryItemsQuantities
 call initPlayerInventory
@@ -18,10 +20,6 @@ global DummyHappy
 global DummyName$
 global DummyDialogue$
 global DummyHealth
-
-' global ItemATK
-' global ItemDF
-call initPlayerVariables
 call froggit
 ' Game Variables
 GameRound = 1
@@ -85,21 +83,25 @@ do
         end if
         if DummyHealth <= 0 then
             NumXP=NumXP+int(rnd(1)*2)
-            NumGold=NumGold+int(rnd(1)*10)
+            obtainedGold = int(rnd(1)*10)
+            NumGold = NumGold + obtainedGold
             PRINT "YOU WON!"
             PRINT "you got " ;NumXP; " XP"
-            PRINT "and " ;NumGold; " GOLD"
+            PRINT "and " ;obtainedGold; " GOLD"
+            PRINT "your total gold " ; NumGold
             GameRound = GameRound + 1
             ' go to the next round
             exit do
         end if
         IF DummySpare=0 THEN
             NumXP=NumXP+int(rnd(1)*2)
-            NumGold=NumGold+int(rnd(1)*10)
+            obtainedGold = int(rnd(1)*10)
+            NumGold = NumGold + obtainedGold
             PRINT "YOU WON!"
             PRINT DummyName$
             PRINT "you got " ;NumXP; " XP"
-            PRINT "and " ;NumGold; " GOLD"
+            PRINT "and " ;obtainedGold; " GOLD"
+            PRINT "your total gold " ; NumGold
             GameRound = GameRound + 1
             exit do
         end if
@@ -137,9 +139,8 @@ sub initPlayerVariables
     NumXP = 0
     NumGold = 0
     PlayerWepaon$ = "Stick"
-    PlayerArmor$ = "Bandage"
     PlayerATK = 2
-    PlayerDF = 1
+    PlayerCurrentArmor = 1 'Bandage
 end sub
 sub froggit
     DummyHealth = 20
@@ -168,6 +169,7 @@ sub BOSS
     DummyName$ = "Anton2012"
     DummyDialogue$ = "ok this is kinda tought but hey dont give up david :P"
 end sub
+' INVENTORY, ITEMS, ARMOR, WEAPONS
 sub initPlayerInventory
     PlayerInventoryItemsQuantities(1) = int(rnd(1)*5)   '"Crab Apple"
     PlayerInventoryItemsQuantities(2) = int(rnd(1)*4)   '"Sea Tea"
@@ -217,6 +219,24 @@ sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     anItemHP = ItemsHPs(anItemIndex)
     anItemPrice = ItemsPrices(anItemIndex)
 end sub
+sub loadArmor anArmorIndex, byref anArmorName$, byref anArmorDF, byref anArmorPrice
+    ArmorNames$(1) = "Bandage"
+    ArmorPrices(1) = 1
+    ArmorDFs(1) = 1
+    ArmorNames$(2) = "Light shield"
+    ArmorPrices(2) = 5
+    ArmorDFs(2) = 5
+    ArmorNames$(3) = "Medium shield"
+    ArmorPrices(3) = 10
+    ArmorDFs(3) = 10
+    ArmorNames$(4) = "Strong Shield"
+    ArmorPrices(4) = 15
+    ArmorDFs(4) = 15
+' fill output arguments
+    anArmorName$ = ArmorNames$(anArmorIndex)
+    anArmorDF = ArmorDFs(anArmorIndex)
+    anArmorPrice = ArmorPrices(anArmorIndex)
+end sub
 sub waitMilliseconds aMillisecondsDelay
     ms = time$("milliseconds")
     msNow = ms
@@ -238,6 +258,37 @@ PRINT " "
     do
         PRINT "Your gold: "; NumGold
         PRINT
+        PRINT "What would you like to buy?"
+        PRINT "1. ITEMS"
+        PRINT "2. ARMOR"
+        ' PRINT "3. WEAPONS"
+        PRINT "0. exit shop"
+        INPUT "Your choise:" ;shopChoice
+        SELECT CASE shopChoice
+            CASE 1
+                call SHOPITEMS
+            CASE 2
+                call SHOPARMOR
+            ' CASE 3
+            '     call SHOPWEAPONS
+            CASE 0
+                exit do
+            CASE ELSE
+                PRINT "Invalid choice. Please enter a number from the menu."
+        END SELECT
+    loop until true
+end sub
+sub SHOPITEMS
+' PRINT " __        _    _ "
+' PRINT "(_   |_|  /  \  |_) "
+' PRINT "__) |  |  \_/  |   "
+' PRINT " ITEMS "
+' PRINT " "
+' PRINT " "
+'     PRINT "HI! Welcome to my shop where you can buy ITEMS, ARMOR and WEAPONS"
+    do
+        PRINT "Your gold: "; NumGold
+        PRINT
         PRINT "ITEMS:"
         for itemIndex = 1 to ItemsSize
             itemName$=""
@@ -248,32 +299,87 @@ PRINT " "
             PRINT ". You have: "; PlayerInventoryItemsQuantities(itemIndex); 
             PRINT ". It gives "; itemHP; " HP. It costs: "; itemPrice
         next itemIndex
-        PRINT "0. exit shop"
+        PRINT "0. back"
         INPUT "Choose item to buy:" ;itemChoice
         if (itemChoice=0) then
             exit do
+        else 
+            if (itemChoise > ItemsSize) then
+                Print "Wrong choise"
+            else
+                itemName$=""
+                itemHP=0
+                itemPrice=0
+                call loadItem itemChoice, itemName$, itemHP, itemPrice
+                IF ( NumGold >= itemPrice ) THEN
+                    PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)+1
+                    NumGold = NumGold - itemPrice
+                ELSE
+                    PRINT "You don't have enough gold"
+                end if
+            end if
         end if
-        itemName$=""
-        itemHP=0
-        itemPrice=0
-        call loadItem itemChoice, itemName$, itemHP, itemPrice
-        IF ( NumGold >= itemPrice ) THEN
-            PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)+1
-            NumGold = NumGold - itemPrice
-        ELSE
-            PRINT "You don't have enough gold"
+    loop until true
+end sub
+sub SHOPARMOR
+    do
+        PRINT "Your gold: "; NumGold
+        PRINT
+        armorName$=""
+        armorDF=0
+        armorPrice=0
+        call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+        PRINT "Your current armor: "; armorName$; ". It DF: "; armorDF
+        PRINT
+        PRINT "ARMORS:"
+        for armorIndex = 1 to ArmorsSize
+            armorName$=""
+            armorDF=0
+            armorPrice=0
+            call loadArmor armorIndex, armorName$, armorDF, armorPrice
+            PRINT armorIndex; ". "; armorName$; 
+            PRINT ". DF: "; armorDF; 
+            PRINT ". Price "; armorPrice
+        next armorIndex
+        PRINT "0. back"
+        INPUT "Choose armor to buy:" ;armorChoice
+        if (armorChoice=0) then
+            exit do
+        else
+            if (armorChoice=PlayerCurrentArmor) then
+                PRINT "You already equipped this armor"
+            else
+                if (armorChoice > ArmorsSize) then
+                    PRINT "Wrong choise"
+                else
+                    armorName$=""
+                    armorDF=0
+                    armorPrice=0
+                    call loadArmor armorChoice, armorName$, armorDF, armorPrice
+                    IF ( NumGold >= armorPrice ) THEN
+                        PlayerCurrentArmor = armorChoice
+                        NumGold = NumGold - armorPrice
+                    ELSE
+                        PRINT "You don't have enough gold"
+                    end if
+                end if
+            end if
         end if
     loop until true
 end sub
 ' FIGHT ACT ITEM MERCY
 sub FIGHT
+    armorName$=""
+    armorDF=0
+    armorPrice=0
+    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
     RandomDamage=int(rnd(1)*5)
     RandomDamage=RandomDamage+PlayerATK
     PRINT DummyName$;" took "; RandomDamage; " damege!"
     DummyHealth=DummyHealth - RandomDamage
     PRINT DummyName$;"'s Health:"; DummyHealth
     RandomDamage=int(rnd(1)*5)
-    RandomDamage=RandomDamage-PlayerDF
+    RandomDamage=RandomDamage-armorDF
     if RandomDamage<0 then
         RandomDamage=0
     end if
@@ -283,13 +389,20 @@ sub FIGHT
     print
 end sub
 sub ACT
+    armorName$=""
+    armorDF=0
+    armorPrice=0
+    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
     PRINT "you complement " ;DummyName$
     PRINT "It seems flattered"
     DummyHappy = DummyHappy - 1
     RandomDamage=int(rnd(1)*5)
     PRINT "You got "; RandomDamage ; " damage!"
-    RandomDamage=RandomDamage-PlayerDF
-    YourHealth=YourHealth-RandomDamage-PlayerDF
+    RandomDamage=RandomDamage-armorDF
+    if RandomDamage<0 then
+        RandomDamage=0
+    end if
+    YourHealth=YourHealth-RandomDamage
     PRINT "Your Health: "; YourHealth
     print
 end sub
@@ -318,11 +431,18 @@ sub ITEM
 end sub
 sub MERCY
     IF DummySpare>0 THEN
+        armorName$=""
+        armorDF=0
+        armorPrice=0
+        call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
         PRINT DummyName$; " is too angry to be spared"
         RandomDamage=int(rnd(1)*5)
         PRINT "You got "; RandomDamage; " damage!"
-        RandomDamage=RandomDamage-PlayerDF
-        YourHealth=YourHealth-RandomDamage-PlayerDF
+        RandomDamage=RandomDamage-armorDF
+        if RandomDamage<0 then
+            RandomDamage=0
+        end if
+        YourHealth=YourHealth-RandomDamage
         PRINT "Your Health "; YourHealth
         print
     end if
