@@ -3,13 +3,14 @@ global ItemsSize
 ItemsSize = 5 ' this variable should contain total number of all items
 global ArmorsSize
 ArmorsSize = 4
+global WeaponsSize
+WeaponsSize = 4
 ' Player Variables
 global YourHealth
 global NumXP
 global NumGold
-global PlayerWepaon$
-global PlayerATK
 global PlayerCurrentArmor ' an index of current player armor from armors array
+global PlayerCurrentWeapon ' an index of current player weapon from weapons array
 call initPlayerVariables
 ' this is an array of items quatities. it has the same size as ItemsSize, the items in this array is quantities of items in player inventory
 global PlayerInventoryItemsQuantities
@@ -138,9 +139,8 @@ sub initPlayerVariables
     YourHealth = 20 + (NumXP - 1) * 4
     NumXP = 0
     NumGold = 0
-    PlayerWepaon$ = "Stick"
-    PlayerATK = 2
     PlayerCurrentArmor = 1 'Bandage
+    PlayerCurrentWeapon = 1 'Stick
 end sub
 sub froggit
     DummyHealth = 20
@@ -218,13 +218,31 @@ sub loadArmor anArmorIndex, byref anArmorName$, byref anArmorDF, byref anArmorPr
     ArmorNames$(3) = "Medium shield"
     ArmorPrices(3) = 10
     ArmorDFs(3) = 10
-    ArmorNames$(4) = "Strong Shield"
+    ArmorNames$(4) = "Hard Shield"
     ArmorPrices(4) = 15
     ArmorDFs(4) = 15
 ' fill output arguments
     anArmorName$ = ArmorNames$(anArmorIndex)
     anArmorDF = ArmorDFs(anArmorIndex)
     anArmorPrice = ArmorPrices(anArmorIndex)
+end sub
+sub loadWeapon aWeaponIndex, byref aWeaponName$, byref aWeaponATK, byref aWeaponPrice
+    WeaponNames$(1) = "Stick"
+    WeaponPrices(1) = 1
+    WeaponATKs(1) = 2
+    WeaponNames$(2) = "Light Weapon"
+    WeaponPrices(2) = 5
+    WeaponATKs(2) = 5
+    WeaponNames$(3) = "Medium Weapon"
+    WeaponPrices(3) = 10
+    WeaponATKs(3) = 10
+    WeaponNames$(4) = "Heavy Weapon"
+    WeaponPrices(4) = 15
+    WeaponATKs(4) = 15
+' fill output arguments
+    aWeaponName$ = WeaponNames$(aWeaponIndex)
+    aWeaponATK = WeaponATKs(aWeaponIndex)
+    aWeaponPrice = WeaponPrices(aWeaponIndex)
 end sub
 sub waitMilliseconds aMillisecondsDelay
     ms = time$("milliseconds")
@@ -250,7 +268,7 @@ PRINT " "
         PRINT "What would you like to buy?"
         PRINT "1. ITEMS"
         PRINT "2. ARMOR"
-        ' PRINT "3. WEAPONS"
+        PRINT "3. WEAPONS"
         PRINT "0. exit shop"
         INPUT "Your choise:" ;shopChoice
         SELECT CASE shopChoice
@@ -258,8 +276,8 @@ PRINT " "
                 call SHOPITEMS
             CASE 2
                 call SHOPARMOR
-            ' CASE 3
-            '     call SHOPWEAPONS
+            CASE 3
+                call SHOPWEAPONS
             CASE 0
                 exit do
             CASE ELSE
@@ -356,14 +374,66 @@ sub SHOPARMOR
         end if
     loop until true
 end sub
+sub SHOPWEAPONS
+    do
+        PRINT "Your gold: "; NumGold
+        PRINT
+        weaponName$=""
+        weaponATK=0
+        weaponPrice=0
+        call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
+        PRINT "Your current weapon: "; weaponName$; ". It ATK: "; weaponATK
+        PRINT
+        PRINT "WEAPONS:"
+        for weaponIndex = 1 to WeaponsSize
+            weaponName$=""
+            weaponATK=0
+            weaponPrice=0
+            call loadWeapon weaponIndex, weaponName$, weaponATK, weaponPrice
+            PRINT weaponIndex; ". "; weaponName$; 
+            PRINT ". ATK: "; weaponATK; 
+            PRINT ". Price "; weaponPrice
+        next weaponIndex
+        PRINT "0. back"
+        INPUT "Choose weapon to buy:" ;weaponChoice
+        if (weaponChoice=0) then
+            exit do
+        else
+            if (weaponChoice=PlayerCurrentWeapon) then
+                PRINT "You already equipped this weapon"
+            else
+                if (weaponChoice > WeaponsSize) then
+                    PRINT "Wrong choise"
+                else
+                    weaponName$=""
+                    weaponATK=0
+                    weaponPrice=0
+                    call loadWeapon weaponChoice, weaponName$, weaponATK, weaponPrice
+                    IF ( NumGold >= weaponPrice ) THEN
+                        PlayerCurrentWeapon = weaponChoice
+                        NumGold = NumGold - weaponPrice
+                    ELSE
+                        PRINT "You don't have enough gold"
+                    end if
+                end if
+            end if
+        end if
+    loop until true
+end sub
 ' FIGHT ACT ITEM MERCY
 sub FIGHT
     armorName$=""
     armorDF=0
     armorPrice=0
     call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+
+    weaponName$=""
+    weaponATK=0
+    weaponPrice=0
+    call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
+
     RandomDamage=int(rnd(1)*5)
-    RandomDamage=RandomDamage+PlayerATK
+    RandomDamage=RandomDamage+weaponATK
     PRINT DummyName$;" took "; RandomDamage; " damege!"
     DummyHealth=DummyHealth - RandomDamage
     PRINT DummyName$;"'s Health:"; DummyHealth
