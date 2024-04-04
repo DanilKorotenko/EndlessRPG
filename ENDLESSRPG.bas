@@ -1,3 +1,6 @@
+' Item Variables
+global ItemsSize
+ItemsSize = 5 ' this variable should contain total number of all items
 ' Player Variables
 global YourHealth
 global NumXP
@@ -6,7 +9,9 @@ global PlayerWepaon$
 global PlayerArmor$
 global PlayerATK
 global PlayerDF
-
+' this is an array of items quatities. it has the same size as ItemsSize, the items in this array is quantities of items in player inventory
+global PlayerInventoryItemsQuantities
+call initPlayerInventory
 ' Dummy Variables
 global DummySpare
 global DummyHappy
@@ -14,22 +19,12 @@ global DummyName$
 global DummyDialogue$
 global DummyHealth
 
-' Item Variables
-global ItemsQuantities ' array of quantities
-global ItemsNames$ ' array of names
-global ItemsPrices
-global ItemsHPs$ ' array of HPs that items gives
-global ItemsSize
-global ItemATK
-global ItemDF
-
+' global ItemATK
+' global ItemDF
 call initPlayerVariables
 call froggit
-call initItemsVariables
-
 ' Game Variables
 GameRound = 1
-
 'round loop
 PRINT " __         __         __    __   __ "
 PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
@@ -48,7 +43,6 @@ CALL waitMilliseconds 300
 PRINT "Anton Korotenko Danilovich"
 PRINT "Lead Programer"
 CALL waitMilliseconds 1000
-
 do
     print
     print "Round: "; GameRound
@@ -174,53 +168,55 @@ sub BOSS
     DummyName$ = "Anton2012"
     DummyDialogue$ = "ok this is kinda tought but hey dont give up david :P"
 end sub
-
-sub initItemsVariables
+sub initPlayerInventory
+    PlayerInventoryItemsQuantities(1) = int(rnd(1)*5)   '"Crab Apple"
+    PlayerInventoryItemsQuantities(2) = int(rnd(1)*4)   '"Sea Tea"
+    PlayerInventoryItemsQuantities(3) = 1               '"Cinnamon-Buttersctotch Pie"
+    PlayerInventoryItemsQuantities(4) = int(rnd(1)*2)   '"Monster Candy"
+    PlayerInventoryItemsQuantities(5) = int(rnd(1)*7)   '"Spider Donut"
+end sub
+sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     ItemsNames$(1) = "Crab Apple"
-    ItemsQuantities(1) = int(rnd(1)*5)
     ItemsPrices(1) = 5
     ItemsHPs(1) = 5
     ItemATK(1) = 0
     ItemDF(1) = 0
     ItemsNames$(2) = "Sea Tea"
-    ItemsQuantities(2) = int(rnd(1)*4)
     ItemsPrices(2) = 5
     ItemsHPs(2) = 8
     ItemATK(2) = 0
     ItemDF(2) = 0
     ItemsNames$(3) = "Cinnamon-Buttersctotch Pie"
-    ItemsQuantities(3) = 1
     ItemsPrices(3) = 5
     ItemsHPs(3) = 21
     ItemATK(3) = 0
     ItemDF(3) = 0
     ItemsNames$(4) = "Monster Candy"
-    ItemsQuantities(4) = int(rnd(1)*2)
     ItemsPrices(4) = 5
     ItemsHPs(4) = 5
     ItemATK(4) = 0
     ItemDF(4) = 0
     ItemsNames$(5) = "Spider Donut"
-    ItemsQuantities(5) = int(rnd(1)*7)
     ItemsPrices(5) = 5
     ItemsHPs(5) = 11
     ItemATK(5) = 0
     ItemDF(5) = 0
     ItemsNames$(6) = "TEST_KNIFE"
-    ItemsQuantities(6) = 0
     ItemsPrices(6) = 10
     ItemsHPs(6) = 0
     ItemATK(6) = 5
     ItemDF(6) = 0
     ItemsNames$(7) = "TEST_SHIELD"
-    ItemsQuantities(7) = 0
     ItemsPrices(7) = 9
     ItemsHPs(7) = 0
     ItemATK(7) = 0
     ItemDF(7) = 5
-    ItemsSize = 7
+'    ItemsSize = 7 this variable should be set at the beggining of code
+' fill output arguments
+    anItemName$ = ItemsNames$(anItemIndex)
+    anItemHP = ItemsHPs(anItemIndex)
+    anItemPrice = ItemsPrices(anItemIndex)
 end sub
-
 sub waitMilliseconds aMillisecondsDelay
     ms = time$("milliseconds")
     msNow = ms
@@ -230,7 +226,6 @@ sub waitMilliseconds aMillisecondsDelay
         msDiff = msNow - ms
     loop until msDiff >= aMillisecondsDelay
 end sub
-
 ' SHOP
 sub SHOP
 PRINT " __        _    _ "
@@ -245,25 +240,31 @@ PRINT " "
         PRINT
         PRINT "ITEMS:"
         for itemIndex = 1 to ItemsSize
-            PRINT itemIndex; ". ";  ItemsNames$(itemIndex); ". You have: "; ItemsQuantities(itemIndex); ". It gives "; ItemsHPs(itemIndex); " HP. It costs: "; ItemsPrices(itemIndex)
+            itemName$=""
+            itemHP=0
+            itemPrice=0
+            call loadItem itemIndex, itemName$, itemHP, itemPrice
+            PRINT itemIndex; ". "; itemName$; 
+            PRINT ". You have: "; PlayerInventoryItemsQuantities(itemIndex); 
+            PRINT ". It gives "; itemHP; " HP. It costs: "; itemPrice
         next itemIndex
-        PRINT "0. exit"
-
+        PRINT "0. exit shop"
         INPUT "Choose item to buy:" ;itemChoice
-
         if (itemChoice=0) then
             exit do
         end if
-
-        IF (NumGold>ItemsPrices(itemChoice)) OR (NumGold=ItemsPrices(itemChoice)) THEN
-            ItemsQuantities(itemChoice)=ItemsQuantities(itemChoice)+1
-            NumGold=NumGold-ItemsPrices(itemChoice)
+        itemName$=""
+        itemHP=0
+        itemPrice=0
+        call loadItem itemChoice, itemName$, itemHP, itemPrice
+        IF ( NumGold >= itemPrice ) THEN
+            PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)+1
+            NumGold = NumGold - itemPrice
         ELSE
             PRINT "You don't have enough gold"
         end if
     loop until true
 end sub
-
 ' FIGHT ACT ITEM MERCY
 sub FIGHT
     RandomDamage=int(rnd(1)*5)
@@ -281,7 +282,6 @@ sub FIGHT
     PRINT "Your Health: "; YourHealth
     print
 end sub
-
 sub ACT
     PRINT "you complement " ;DummyName$
     PRINT "It seems flattered"
@@ -293,23 +293,29 @@ sub ACT
     PRINT "Your Health: "; YourHealth
     print
 end sub
-
 sub ITEM
     PRINT "CHOSE ITEM"
     for itemIndex = 1 to ItemsSize
-        PRINT itemIndex; ". "; ItemsQuantities(itemIndex); " "; ItemsNames$(itemIndex); " gives "; ItemsHPs(itemIndex); " HP"
+        itemName$=""
+        itemHP=0
+        itemPrice=0
+        call loadItem itemIndex, itemName$, itemHP, itemPrice
+        PRINT itemIndex; ". "; PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; " gives "; itemHP; " HP"
     next itemIndex
     INPUT "Item:" ;itemChoice
-    IF ItemsQuantities(itemChoice)>0 THEN
-        YourHealth=YourHealth+ItemsHPs(itemChoice)
+    itemName$=""
+    itemHP=0
+    itemPrice=0
+    call loadItem itemChoice, itemName$, itemHP, itemPrice
+    IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
+        YourHealth = YourHealth + itemHP
         PRINT "Your Health ";YourHealth
-        ItemsQuantities(itemChoice)=ItemsQuantities(itemChoice)-1
+        PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)-1
     ELSE
         PRINT "you ran out of this item"
     end if
     print
 end sub
-
 sub MERCY
     IF DummySpare>0 THEN
         PRINT DummyName$; " is too angry to be spared"
