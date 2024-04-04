@@ -1,3 +1,6 @@
+' initialize randomizer, if dont use this function, rnd will always return the same sequence of numbers
+rndSeed = time$("seconds") / 86400
+randomize rndSeed
 ' Item Variables
 global ItemsSize
 ItemsSize = 5 ' this variable should contain total number of all items
@@ -426,12 +429,10 @@ sub FIGHT
     armorDF=0
     armorPrice=0
     call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
-
     weaponName$=""
     weaponATK=0
     weaponPrice=0
     call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
-
     RandomDamage=int(rnd(1)*5)
     RandomDamage=RandomDamage+weaponATK
     PRINT DummyName$;" took "; RandomDamage; " damege!"
