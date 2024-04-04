@@ -34,20 +34,20 @@ GameRound = 1
 PRINT " __         __         __    __   __ "
 PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
 PRINT "|__  | \|  |__/  |__ |__  __)  __) "
-CALL wait03Second
+CALL waitMilliseconds 300
 PRINT " "
 PRINT "CREDITS TO:"
 PRINT "David Vidal Garcia"
 PRINT "Play-Testing"
 PRINT " "
-CALL wait03Second
+CALL waitMilliseconds 300
 PRINT "Danil Korotenko Pavlo"
 PRINT "Programing help"
 PRINT " "
-CALL wait03Second
+CALL waitMilliseconds 300
 PRINT "Anton Korotenko Danilovich"
 PRINT "Lead Programer"
-CALL wait1Second
+CALL waitMilliseconds 1000
 
 do
     print
@@ -221,34 +221,14 @@ sub initItemsVariables
     ItemsSize = 7
 end sub
 
-sub wait1Second
-    seconds = time$("seconds")
-    secondsNow = seconds
-    secondsDiff = secondsNow - seconds
-    do
-        secondsNow = time$("seconds")
-        secondsDiff = secondsNow - seconds
-    loop until secondsDiff >= 1
-end sub
-
-sub wait05Second
+sub waitMilliseconds aMillisecondsDelay
     ms = time$("milliseconds")
     msNow = ms
     msDiff = msNow - ms
     do
         msNow = time$("milliseconds")
         msDiff = msNow - ms
-    loop until msDiff >= 500
-end sub
-
-sub wait03Second
-    seconds = time$("seconds")
-    secondsNow = seconds
-    secondsDiff = secondsNow - seconds
-    do
-        secondsNow = time$("seconds")
-        secondsDiff = secondsNow - seconds
-    loop until secondsDiff >= 0.3
+    loop until msDiff >= aMillisecondsDelay
 end sub
 
 ' SHOP
