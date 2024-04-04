@@ -23,13 +23,13 @@ global ItemsSize
 global ItemATK
 global ItemDF
 
-
 call initPlayerVariables
 call froggit
 call initItemsVariables
 
 ' Game Variables
 GameRound = 1
+
 'round loop
 PRINT " __         __         __    __   __ "
 PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
@@ -60,7 +60,6 @@ do
     DummyHappy = 1
     print DummyName$ ;"'s Health: "; DummyHealth
     print "your health: "; YourHealth
-
     ' fighting loop
     DO
         'each time we print menu
@@ -82,17 +81,14 @@ do
             CASE ELSE
                 PRINT "Invalid choice. Please enter a number from the menu."
         END SELECT
-
         if YourHealth <= 0 then
             Print "You loose"
             exit do
         end if
-
         if DummyHappy = 0 then
             PRINT DummyName$; " is smiling"
             DummySpare=DummySpare=-1
         end if
-
         if DummyHealth <= 0 then
             NumXP=NumXP+int(rnd(1)*2)
             NumGold=NumGold+int(rnd(1)*10)
@@ -103,7 +99,6 @@ do
             ' go to the next round
             exit do
         end if
-
         IF DummySpare=0 THEN
             NumXP=NumXP+int(rnd(1)*2)
             NumGold=NumGold+int(rnd(1)*10)
@@ -115,19 +110,15 @@ do
             exit do
         end if
     LOOP UNTIL TRUE
-
     if YourHealth <= 0 then
         exit do
     end if
-
     IF DummySpare=0 THEN
         exit do
     end if
-
     IF GameRound MOD 3 = 0 THEN
         call SHOP
     end if
-
     IF GameRound MOD 1 = 0 THEN
        rndenm = int(rnd(1)*3)
     IF rndenm = 1 THEN
@@ -140,14 +131,11 @@ do
     CALL moldsmal
     end if
     end if
-
     IF GameRound MOD 10 = 0 THEN
         call BOSS
    end if
 LOOP UNTIL TRUE
-
 END
-
 ' SUBROUTINES AREA /////////////////////////////////////////////
 sub initPlayerVariables
     ' initial values of player variables
@@ -159,7 +147,6 @@ sub initPlayerVariables
     PlayerATK = 2
     PlayerDF = 1
 end sub
-
 sub froggit
     DummyHealth = 20
     DummySpare = 1
@@ -167,7 +154,6 @@ sub froggit
     DummyName$ = "Froggit"
     DummyDialogue$ = "Ribbit,Ribbit"
 end sub
-
 sub vegetoid
     DummyHealth = 26
     DummySpare = 2
@@ -175,14 +161,12 @@ sub vegetoid
     DummyName$ = "Vegetiod"
     DummyDialogue$ = "Farmed Locally, Very Locally"
 end sub
-
 sub moldsmal
     DummySpare = 2
     DummyHappy = 1
     DummyName$ = "Moldsmal"
     DummyDialogue$ = "OK idk what to write here i dont even know what he says"
 end sub
-
 sub BOSS
     DummyHealth = 40
     DummySpare = 3
@@ -198,49 +182,42 @@ sub initItemsVariables
     ItemsHPs(1) = 5
     ItemATK(1) = 0
     ItemDF(1) = 0
-
     ItemsNames$(2) = "Sea Tea"
     ItemsQuantities(2) = int(rnd(1)*4)
     ItemsPrices(2) = 5
     ItemsHPs(2) = 8
     ItemATK(2) = 0
     ItemDF(2) = 0
-
     ItemsNames$(3) = "Cinnamon-Buttersctotch Pie"
     ItemsQuantities(3) = 1
     ItemsPrices(3) = 5
     ItemsHPs(3) = 21
     ItemATK(3) = 0
     ItemDF(3) = 0
-
     ItemsNames$(4) = "Monster Candy"
     ItemsQuantities(4) = int(rnd(1)*2)
     ItemsPrices(4) = 5
     ItemsHPs(4) = 5
     ItemATK(4) = 0
     ItemDF(4) = 0
-
     ItemsNames$(5) = "Spider Donut"
     ItemsQuantities(5) = int(rnd(1)*7)
     ItemsPrices(5) = 5
     ItemsHPs(5) = 11
     ItemATK(5) = 0
     ItemDF(5) = 0
-
     ItemsNames$(6) = "TEST_KNIFE"
     ItemsQuantities(6) = 0
     ItemsPrices(6) = 10
     ItemsHPs(6) = 0
     ItemATK(6) = 5
     ItemDF(6) = 0
-
     ItemsNames$(7) = "TEST_SHIELD"
     ItemsQuantities(7) = 0
     ItemsPrices(7) = 9
     ItemsHPs(7) = 0
     ItemATK(7) = 0
     ItemDF(7) = 5
-
     ItemsSize = 7
 end sub
 
@@ -255,13 +232,13 @@ sub wait1Second
 end sub
 
 sub wait05Second
-    seconds = time$("seconds")
-    secondsNow = seconds
-    secondsDiff = secondsNow - seconds
+    ms = time$("milliseconds")
+    msNow = ms
+    msDiff = msNow - ms
     do
-        secondsNow = time$("seconds")
-        secondsDiff = secondsNow - seconds
-    loop until secondsDiff >= 0.5
+        msNow = time$("milliseconds")
+        msDiff = msNow - ms
+    loop until msDiff >= 500
 end sub
 
 sub wait03Second
