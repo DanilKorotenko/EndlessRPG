@@ -203,17 +203,6 @@ sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     ItemsHPs(5) = 11
     ItemATK(5) = 0
     ItemDF(5) = 0
-    ItemsNames$(6) = "TEST_KNIFE"
-    ItemsPrices(6) = 10
-    ItemsHPs(6) = 0
-    ItemATK(6) = 5
-    ItemDF(6) = 0
-    ItemsNames$(7) = "TEST_SHIELD"
-    ItemsPrices(7) = 9
-    ItemsHPs(7) = 0
-    ItemATK(7) = 0
-    ItemDF(7) = 5
-'    ItemsSize = 7 this variable should be set at the beggining of code
 ' fill output arguments
     anItemName$ = ItemsNames$(anItemIndex)
     anItemHP = ItemsHPs(anItemIndex)
