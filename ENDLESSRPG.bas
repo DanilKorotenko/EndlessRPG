@@ -51,9 +51,6 @@ do
     ' crete new dummy here
     ' assign to it some random name
     PRINT DummyName$; " HAS APEARED!"
-    DummyHealth = 20
-    DummySpare = 1
-    DummyHappy = 1
     print DummyName$ ;"'s Health: "; DummyHealth
     print "your health: "; YourHealth
     ' fighting loop
@@ -146,20 +143,21 @@ sub initPlayerVariables
     PlayerCurrentWeapon = 1 'Stick
 end sub
 sub froggit
-    DummyHealth = 20
+    DummyHealth = randInRange(YourHealth-5, YourHealth+5)
     DummySpare = 1
     DummyHappy = 1
     DummyName$ = "Froggit"
     DummyDialogue$ = "Ribbit,Ribbit"
 end sub
 sub vegetoid
-    DummyHealth = 26
+    DummyHealth = randInRange(YourHealth-5, YourHealth+5)
     DummySpare = 2
     DummyHappy = 1
     DummyName$ = "Vegetiod"
     DummyDialogue$ = "Farmed Locally, Very Locally"
 end sub
 sub moldsmal
+    DummyHealth = randInRange(YourHealth-5, YourHealth+5)
     DummySpare = 2
     DummyHappy = 1
     DummyName$ = "Moldsmal"
@@ -247,6 +245,7 @@ sub loadWeapon aWeaponIndex, byref aWeaponName$, byref aWeaponATK, byref aWeapon
     aWeaponATK = WeaponATKs(aWeaponIndex)
     aWeaponPrice = WeaponPrices(aWeaponIndex)
 end sub
+' service subs and funcs/////////////////////////////////////////////////
 sub waitMilliseconds aMillisecondsDelay
     ms = time$("milliseconds")
     msNow = ms
@@ -256,6 +255,10 @@ sub waitMilliseconds aMillisecondsDelay
         msDiff = msNow - ms
     loop until msDiff >= aMillisecondsDelay
 end sub
+function randInRange(aRangeMin, aRangeMax)
+    randInRange = int(rnd(1)*(aRangeMax - aRangeMin))+aRangeMin
+end function
+'////////////////////////////////////////////////////////////////////////
 ' SHOP
 sub SHOP
 PRINT " __        _    _ "
