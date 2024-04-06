@@ -10,8 +10,8 @@ global WeaponsSize
 WeaponsSize = 4
 ' Player Variables
 global PlayerCurrentHealth
-global NumXP
-global NumGold
+global PlayerXP
+global PlayerGold
 global PlayerCurrentArmor ' an index of current player armor from armors array
 global PlayerCurrentWeapon ' an index of current player weapon from weapons array
 call initPlayerVariables
@@ -83,26 +83,26 @@ do
             DummySpare=DummySpare=-1
         end if
         if DummyHealth <= 0 then
-            NumXP=NumXP+int(rnd(1)*2)
+            PlayerXP=PlayerXP+int(rnd(1)*2)
             obtainedGold = int(rnd(1)*10)
-            NumGold = NumGold + obtainedGold
+            PlayerGold = PlayerGold + obtainedGold
             PRINT "YOU WON!"
-            PRINT "you got " ;NumXP; " XP"
+            PRINT "you got " ;PlayerXP; " XP"
             PRINT "and " ;obtainedGold; " GOLD"
-            PRINT "your total gold " ; NumGold
+            PRINT "your total gold " ; PlayerGold
             GameRound = GameRound + 1
             ' go to the next round
             exit do
         end if
         IF DummySpare=0 THEN
-            NumXP=NumXP+int(rnd(1)*2)
+            PlayerXP=PlayerXP+int(rnd(1)*2)
             obtainedGold = int(rnd(1)*10)
-            NumGold = NumGold + obtainedGold
+            PlayerGold = PlayerGold + obtainedGold
             PRINT "YOU WON!"
             PRINT DummyName$
-            PRINT "you got " ;NumXP; " XP"
+            PRINT "you got " ;PlayerXP; " XP"
             PRINT "and " ;obtainedGold; " GOLD"
-            PRINT "your total gold " ; NumGold
+            PRINT "your total gold " ; PlayerGold
             GameRound = GameRound + 1
             exit do
         end if
@@ -136,9 +136,9 @@ END
 ' SUBROUTINES AREA /////////////////////////////////////////////
 sub initPlayerVariables
     ' initial values of player variables
-    PlayerCurrentHealth = 20 + (NumXP - 1) * 4
-    NumXP = 0
-    NumGold = 0
+    PlayerCurrentHealth = 20 + (PlayerXP - 1) * 4
+    PlayerXP = 0
+    PlayerGold = 0
     PlayerCurrentArmor = 1 'Bandage
     PlayerCurrentWeapon = 1 'Stick
 end sub
@@ -282,7 +282,7 @@ PRINT " "
 PRINT " "
     PRINT "HI! Welcome to my shop where you can buy ITEMS, ARMOR and WEAPONS"
     do
-        PRINT "Your gold: "; NumGold
+        PRINT "Your gold: "; PlayerGold
         PRINT
         PRINT "What would you like to buy?"
         PRINT "1. ITEMS"
@@ -313,7 +313,7 @@ sub SHOPITEMS
 ' PRINT " "
 '     PRINT "HI! Welcome to my shop where you can buy ITEMS, ARMOR and WEAPONS"
     do
-        PRINT "Your gold: "; NumGold
+        PRINT "Your gold: "; PlayerGold
         PRINT
         PRINT "ITEMS:"
         for itemIndex = 1 to ItemsSize
@@ -337,9 +337,9 @@ sub SHOPITEMS
                 itemHP=0
                 itemPrice=0
                 call loadItem itemChoice, itemName$, itemHP, itemPrice
-                IF ( NumGold >= itemPrice ) THEN
+                IF ( PlayerGold >= itemPrice ) THEN
                     PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)+1
-                    NumGold = NumGold - itemPrice
+                    PlayerGold = PlayerGold - itemPrice
                 ELSE
                     PRINT "You don't have enough gold"
                 end if
@@ -349,7 +349,7 @@ sub SHOPITEMS
 end sub
 sub SHOPARMOR
     do
-        PRINT "Your gold: "; NumGold
+        PRINT "Your gold: "; PlayerGold
         PRINT
         call printPlayerArmor
         PRINT "Your current armor: "; armorName$; ". It DF: "; armorDF
@@ -379,9 +379,9 @@ sub SHOPARMOR
                     armorDF=0
                     armorPrice=0
                     call loadArmor armorChoice, armorName$, armorDF, armorPrice
-                    IF ( NumGold >= armorPrice ) THEN
+                    IF ( PlayerGold >= armorPrice ) THEN
                         PlayerCurrentArmor = armorChoice
-                        NumGold = NumGold - armorPrice
+                        PlayerGold = PlayerGold - armorPrice
                     ELSE
                         PRINT "You don't have enough gold"
                     end if
@@ -392,7 +392,7 @@ sub SHOPARMOR
 end sub
 sub SHOPWEAPONS
     do
-        PRINT "Your gold: "; NumGold
+        PRINT "Your gold: "; PlayerGold
         PRINT
         call printPlayerWeapon
         PRINT
@@ -421,9 +421,9 @@ sub SHOPWEAPONS
                     weaponATK=0
                     weaponPrice=0
                     call loadWeapon weaponChoice, weaponName$, weaponATK, weaponPrice
-                    IF ( NumGold >= weaponPrice ) THEN
+                    IF ( PlayerGold >= weaponPrice ) THEN
                         PlayerCurrentWeapon = weaponChoice
-                        NumGold = NumGold - weaponPrice
+                        PlayerGold = PlayerGold - weaponPrice
                     ELSE
                         PRINT "You don't have enough gold"
                     end if
