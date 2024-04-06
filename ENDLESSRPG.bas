@@ -29,7 +29,12 @@ global DummyHappy
 global DummyName$
 global DummyDialogue$
 global DummyHealth
-call froggit
+global DummyGold
+global DummyLevel
+global DummyVitality
+global DummyStrength
+global DummyAgility
+global DummyXP
 ' Game Variables
 GameRound = 1
 'round loop
@@ -55,6 +60,8 @@ do
     print "Round: "; GameRound
     ' crete new dummy here
     ' assign to it some random name
+    randomDummy=randInRange(1,3)
+    call generateDummy randomDummy
     PRINT DummyName$; " HAS APEARED!"
     print DummyName$ ;"'s Health: "; DummyHealth
     print "your health: "; PlayerCurrentHealth
@@ -155,33 +162,62 @@ sub initPlayerVariables
     PlayerCurrentArmor = 1 'Bandage
     PlayerCurrentWeapon = 1 'Stick
 end sub
-sub froggit
-    DummyHealth = randInRange(PlayerCurrentHealth-5, PlayerCurrentHealth+5)
-    DummySpare = 1
-    DummyHappy = 1
-    DummyName$ = "Froggit"
-    DummyDialogue$ = "Ribbit,Ribbit"
-end sub
-sub vegetoid
-    DummyHealth = randInRange(PlayerCurrentHealth-5, PlayerCurrentHealth+5)
-    DummySpare = 2
-    DummyHappy = 1
-    DummyName$ = "Vegetiod"
-    DummyDialogue$ = "Farmed Locally, Very Locally"
-end sub
-sub moldsmal
-    DummyHealth = randInRange(PlayerCurrentHealth-5, PlayerCurrentHealth+5)
-    DummySpare = 2
-    DummyHappy = 1
-    DummyName$ = "Moldsmal"
-    DummyDialogue$ = "OK idk what to write here i dont even know what he says"
-end sub
-sub BOSS
-    DummyHealth = 40
-    DummySpare = 3
-    DummyHappy = 1
-    DummyName$ = "Anton2012"
-    DummyDialogue$ = "ok this is kinda tought but hey dont give up david :P"
+sub generateDummy aDummyIndex
+    DummyNames$(1) = "Froggit"
+    DummySpares(1) = 1
+    DummyHappys(1) = 1
+    DummyDialogues$(1) = "Ribbit,Ribbit"
+    DummyVitalities(1) = 1
+    DummyStrengths(1) = 1
+    DummyAgility(1) = 1
+
+    DummyNames$(2) = "Vegetiod"
+    DummySpares(2) = 2
+    DummyHappys(2) = 1
+    DummyDialogues$(2) = "Farmed Locally, Very Locally"
+    DummyVitalities(2) = 1
+    DummyStrengths(2) = 1
+    DummyAgility(2) = 1
+
+    DummyNames$(3) = "Moldsmal"
+    DummySpares(3) = 2
+    DummyHappys(3) = 1
+    DummyDialogues$(3) = "OK idk what to write here i dont even know what he says"
+    DummyVitalities(3) = 1
+    DummyStrengths(3) = 1
+    DummyAgility(3) = 1
+
+    DummyNames$(4) = "Anton2012" ' BOSS
+    DummySpares(4) = 2
+    DummyHappys(4) = 1
+    DummyDialogues$(4) = "ok this is kinda tought but hey dont give up david :P"
+    DummyVitalities(4) = 1
+    DummyStrengths(4) = 1
+    DummyAgility(4) = 1
+
+    DummySpare = DummySpares(aDummyIndex)
+    DummyHappy = DummyHappys(aDummyIndex)
+    DummyName$ = DummyNames$(aDummyIndex)
+    DummyDialogue$ = DummyDialogues$(aDummyIndex)
+
+    levelDiff=1
+    DummyLevel = randInRange(PlayerLevel-levelDiff, PlayerLevel+levelDiff)
+    if (DummyLevel < 1) then DummyLevel = 1
+
+    DummyVitality = DummyVitalities(aDummyIndex)
+    DummyStrength = DummyStrengths(aDummyIndex)
+    DummyAgility = DummyAgility(aDummyIndex)
+
+    if DummyLevel > 1 then
+        for i = 1 to DummyLevel
+            description$=""
+            call levelUp DummyVitality, DummyStrength, DummyAgility, description
+        next i
+    end if
+
+    DummyGold = randInRange(0, DummyLevel)
+    DummyXP = DummyVitality + DummyStrength + DummyAgility
+    DummyHealth = calculateMaxHP(DummyVitality, DummyStrength)
 end sub
 ' INVENTORY, ITEMS, ARMOR, WEAPONS
 sub initPlayerInventory
@@ -302,6 +338,25 @@ sub printPlayerWeapon
     weaponPrice=0
     call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
 end sub
+sub levelUp byref aVitality, byref aStrength, byref anAgility, byref aDescription
+    skill = aVitality + aStrength + anAgility
+    upgrade = randInRange(0, skill)
+    if (upgrade < aStrength) then
+        aStrength = aStrength + 1
+        aDescription = "Strength + 1"
+    else
+        if upgrade < aStrength + anAgility then
+            anAgility = anAgility + 1
+            aDescription = "Agility + 1"
+        else
+            if upgrade < aStrength + anAgility + aVitality then
+                aVitality = aVitality + 1
+                aDescription = "Vitality + 1"
+            end if
+        end if
+    end if
+end sub
+
 '////////////////////////////////////////////////////////////////////////
 ' SHOP
 sub SHOP
