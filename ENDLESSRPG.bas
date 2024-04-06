@@ -596,7 +596,7 @@ sub MERCY
 end sub
 sub MyInfo
     print "Your health: "; PlayerCurrentHealth; "/"; PlayerMaxHealth
-    print "Level: "; PlayerLevel; " EXP: "; PlayerXP; "/"; LevelXP
+    print "Level: "; PlayerLevel; " EXP: "; PlayerXP; "/"; levelXP()
     print "Vitality (affects max HP):"; PlayerVitality
     print "Strength (affects ATK):"; PlayerStrength
     print "Agility (affects DF):"; PlayerAgility
