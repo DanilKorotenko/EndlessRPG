@@ -75,7 +75,7 @@ do
         PRINT "3. ITEM"
         PRINT "4. MERCY"
         print "5. Info about me"
-        print "6. Info about "; DummyName
+        print "6. Info about "; DummyName$
         PRINT DummyName$; ": " ;DummyDialogue$
         INPUT "Action:" ;actionChoice
         SELECT CASE actionChoice
