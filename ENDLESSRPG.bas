@@ -113,7 +113,7 @@ do
             PRINT "your total XP: " ; PlayerXP
             PRINT "your total gold: " ; PlayerGold
             ' check for level up
-            levelsToUp = PlayerXP % levelXP()
+            levelsToUp = PlayerXP mod levelXP()
             if (levelsToUp > 0) then
                 for i = 0 to levelsToUp
                     PlayerLevel = PlayerLevel + 1
@@ -314,7 +314,7 @@ end function
 function calculateMaxHP(aVitality, aStrength)
     calculateMaxHP = 10 + (aVitality * 5) + aStrength
 end function
-function levelXP '(aLevel)
+function levelXP() '(aLevel)
     levelXP = 10 * PlayerLevel' aLevel
 end function
 function maxATK(aStrength)
