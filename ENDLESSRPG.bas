@@ -258,6 +258,19 @@ end sub
 function randInRange(aRangeMin, aRangeMax)
     randInRange = int(rnd(1)*(aRangeMax - aRangeMin))+aRangeMin
 end function
+sub printPlayerArmor
+    armorName$=""
+    armorDF=0
+    armorPrice=0
+    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+    PRINT "Your current armor: "; armorName$; ". It DF: "; armorDF
+end sub
+sub printPlayerWeapon
+    weaponName$=""
+    weaponATK=0
+    weaponPrice=0
+    call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
+end sub
 '////////////////////////////////////////////////////////////////////////
 ' SHOP
 sub SHOP
@@ -338,10 +351,7 @@ sub SHOPARMOR
     do
         PRINT "Your gold: "; NumGold
         PRINT
-        armorName$=""
-        armorDF=0
-        armorPrice=0
-        call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+        call printPlayerArmor
         PRINT "Your current armor: "; armorName$; ". It DF: "; armorDF
         PRINT
         PRINT "ARMORS:"
@@ -384,11 +394,7 @@ sub SHOPWEAPONS
     do
         PRINT "Your gold: "; NumGold
         PRINT
-        weaponName$=""
-        weaponATK=0
-        weaponPrice=0
-        call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
-        PRINT "Your current weapon: "; weaponName$; ". It ATK: "; weaponATK
+        call printPlayerWeapon
         PRINT
         PRINT "WEAPONS:"
         for weaponIndex = 1 to WeaponsSize
