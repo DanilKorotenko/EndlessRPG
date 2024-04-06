@@ -64,7 +64,7 @@ case (mercy)
 
 endswitch
 
-if (YourHealth <= 0) then (true)
+if (PlayerCurrentHealth <= 0) then (true)
     stop
 endif
 

@@ -9,7 +9,7 @@ ArmorsSize = 4
 global WeaponsSize
 WeaponsSize = 4
 ' Player Variables
-global YourHealth
+global PlayerCurrentHealth
 global NumXP
 global NumGold
 global PlayerCurrentArmor ' an index of current player armor from armors array
@@ -52,7 +52,7 @@ do
     ' assign to it some random name
     PRINT DummyName$; " HAS APEARED!"
     print DummyName$ ;"'s Health: "; DummyHealth
-    print "your health: "; YourHealth
+    print "your health: "; PlayerCurrentHealth
     ' fighting loop
     DO
         'each time we print menu
@@ -74,7 +74,7 @@ do
             CASE ELSE
                 PRINT "Invalid choice. Please enter a number from the menu."
         END SELECT
-        if YourHealth <= 0 then
+        if PlayerCurrentHealth <= 0 then
             Print "You loose"
             exit do
         end if
@@ -107,7 +107,7 @@ do
             exit do
         end if
     LOOP UNTIL TRUE
-    if YourHealth <= 0 then
+    if PlayerCurrentHealth <= 0 then
         exit do
     end if
     IF DummySpare=0 THEN
@@ -136,28 +136,28 @@ END
 ' SUBROUTINES AREA /////////////////////////////////////////////
 sub initPlayerVariables
     ' initial values of player variables
-    YourHealth = 20 + (NumXP - 1) * 4
+    PlayerCurrentHealth = 20 + (NumXP - 1) * 4
     NumXP = 0
     NumGold = 0
     PlayerCurrentArmor = 1 'Bandage
     PlayerCurrentWeapon = 1 'Stick
 end sub
 sub froggit
-    DummyHealth = randInRange(YourHealth-5, YourHealth+5)
+    DummyHealth = randInRange(PlayerCurrentHealth-5, PlayerCurrentHealth+5)
     DummySpare = 1
     DummyHappy = 1
     DummyName$ = "Froggit"
     DummyDialogue$ = "Ribbit,Ribbit"
 end sub
 sub vegetoid
-    DummyHealth = randInRange(YourHealth-5, YourHealth+5)
+    DummyHealth = randInRange(PlayerCurrentHealth-5, PlayerCurrentHealth+5)
     DummySpare = 2
     DummyHappy = 1
     DummyName$ = "Vegetiod"
     DummyDialogue$ = "Farmed Locally, Very Locally"
 end sub
 sub moldsmal
-    DummyHealth = randInRange(YourHealth-5, YourHealth+5)
+    DummyHealth = randInRange(PlayerCurrentHealth-5, PlayerCurrentHealth+5)
     DummySpare = 2
     DummyHappy = 1
     DummyName$ = "Moldsmal"
@@ -447,8 +447,8 @@ sub FIGHT
         RandomDamage=0
     end if
     PRINT "You got "; RandomDamage ; " damage!"
-    YourHealth=YourHealth-RandomDamage
-    PRINT "Your Health: "; YourHealth
+    PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
+    PRINT "Your Health: "; PlayerCurrentHealth
     print
 end sub
 sub ACT
@@ -465,8 +465,8 @@ sub ACT
     if RandomDamage<0 then
         RandomDamage=0
     end if
-    YourHealth=YourHealth-RandomDamage
-    PRINT "Your Health: "; YourHealth
+    PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
+    PRINT "Your Health: "; PlayerCurrentHealth
     print
 end sub
 sub ITEM
@@ -484,8 +484,8 @@ sub ITEM
     itemPrice=0
     call loadItem itemChoice, itemName$, itemHP, itemPrice
     IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
-        YourHealth = YourHealth + itemHP
-        PRINT "Your Health ";YourHealth
+        PlayerCurrentHealth = PlayerCurrentHealth + itemHP
+        PRINT "Your Health ";PlayerCurrentHealth
         PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)-1
     ELSE
         PRINT "you ran out of this item"
@@ -505,8 +505,8 @@ sub MERCY
         if RandomDamage<0 then
             RandomDamage=0
         end if
-        YourHealth=YourHealth-RandomDamage
-        PRINT "Your Health "; YourHealth
+        PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
+        PRINT "Your Health "; PlayerCurrentHealth
         print
     end if
 end sub
