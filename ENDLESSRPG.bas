@@ -298,7 +298,7 @@ sub waitMilliseconds aMillisecondsDelay
     loop until msDiff >= aMillisecondsDelay
 end sub
 function randInRange(aRangeMin, aRangeMax)
-    randInRange = int(rnd(1)*(aRangeMax - aRangeMin))+aRangeMin
+    randInRange = int(rnd(1)*((aRangeMax+1) - aRangeMin))+aRangeMin
 end function
 function calculateMaxHP(aVitality, aStrength)
     calculateMaxHP = 10 + (aVitality * 5) + aStrength
