@@ -565,14 +565,16 @@ sub SHOPWEAPONS
 end sub
 ' FIGHT ACT ITEM MERCY
 sub FIGHT
-    RandomDamage=randInRange(minPlayerATK(), maxPlayerATK()) - dummyDF()
+    dummyDF=randInRange(minDummyDF(), maxDummyDF())
+    RandomDamage=randInRange(minPlayerATK(), maxPlayerATK()) - dummyDF
     if RandomDamage<0 then
         RandomDamage=0
     end if
     PRINT DummyName$;" took "; RandomDamage; " damege!"
     DummyHealth=DummyHealth - RandomDamage
     PRINT DummyName$;"'s Health:"; DummyHealth
-    RandomDamage=randInRange(minDummyATK(), maxDummyATK()) - playerDF()
+    playerDF=randInRange(minPlayerDF(), maxPlayerDF())
+    RandomDamage=randInRange(minDummyATK(), maxDummyATK()) - playerDF
     RandomDamage=RandomDamage-armorDF
     if RandomDamage<0 then
         RandomDamage=0
