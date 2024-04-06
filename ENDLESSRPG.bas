@@ -551,27 +551,21 @@ sub SHOPWEAPONS
 end sub
 ' FIGHT ACT ITEM MERCY
 sub FIGHT
-    armorName$=""
-    armorDF=0
-    armorPrice=0
-    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
-    weaponName$=""
-    weaponATK=0
-    weaponPrice=0
-    call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
-    RandomDamage=int(rnd(1)*5)
-    RandomDamage=RandomDamage+weaponATK
+    RandomDamage=randInRange(minPlayerATK(), maxPlayerATK()) - dummyDF()
+    if RandomDamage<0 then
+        RandomDamage=0
+    end if
     PRINT DummyName$;" took "; RandomDamage; " damege!"
     DummyHealth=DummyHealth - RandomDamage
     PRINT DummyName$;"'s Health:"; DummyHealth
-    RandomDamage=int(rnd(1)*5)
+    RandomDamage=randInRange(minDummyATK(), maxDummyATK()) - playerDF()
     RandomDamage=RandomDamage-armorDF
     if RandomDamage<0 then
         RandomDamage=0
     end if
     PRINT "You got "; RandomDamage ; " damage!"
     PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
-    PRINT "Your Health: "; PlayerCurrentHealth
+    PRINT "Your Health: "; PlayerCurrentHealth; "/"; PlayerMaxHealth
     print
 end sub
 sub ACT
