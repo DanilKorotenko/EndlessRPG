@@ -108,18 +108,15 @@ do
             PRINT "YOU WON!"
             PRINT "you got " ;DummyXP; " XP"
             PRINT "and " ;DummyGold; " GOLD"
-            PRINT "your total XP: " ; PlayerXP
+            PRINT "your total XP: " ; PlayerXP; " / "; levelXP()
             PRINT "your total gold: " ; PlayerGold
             ' check for level up
-            levelsToUp = PlayerXP mod levelXP()
-            if (levelsToUp > 0) then
-                for i = 0 to levelsToUp
+            levelsToUp = int(PlayerXP / levelXP())
+            if (levelsToUp>0) then
+                for i = 1 to levelsToUp
+                    print "Level up!"
                     PlayerLevel = PlayerLevel + 1
-                    description$=""
-                    call levelPlayerUp description$
-                    if (len(description$)>0) then
-                        print description$
-                    end if
+                    call levelPlayerUp
                 next i
             end if
             GameRound = GameRound + 1
@@ -154,7 +151,7 @@ END
 sub initPlayerVariables
     ' initial values of player variables
     PlayerVitality = 1
-    PlayerStrength = 1
+    PlayerStrength = 2
     PlayerAgility = 1
     PlayerMaxHealth = calculateMaxHP(PlayerVitality, PlayerStrength)
     PlayerCurrentHealth = PlayerMaxHealth
@@ -311,7 +308,9 @@ function maxATK(aStrength)
     maxATK = aStrength
 end function
 function minATK(aStrength)
-    minATK = int(aStrength / 2)
+    atk=int(aStrength / 2)
+    if (atk<1) then atk = 1
+    minATK = atk
 end function
 function maxDF(anAgility)
     maxDF = anAgility
@@ -374,7 +373,7 @@ sub printPlayerWeapon
 end sub
 sub levelDummyUp
     skill = DummyVitality + DummyStrength + DummyAgility
-    upgrade = randInRange(0, skill)
+    upgrade = randInRange(0, skill-1)
     if (upgrade < DummyStrength) then
         DummyStrength = DummyStrength + 1
     else
@@ -387,17 +386,20 @@ sub levelDummyUp
         end if
     end if
 end sub
-sub levelPlayerUp byref aDescription$
+sub levelPlayerUp
     skill = PlayerVitality + PlayerStrength + PlayerAgility
     upgrade = randInRange(0, skill)
     if (upgrade < PlayerStrength) then
         PlayerStrength = PlayerStrength + 1
+        print "Strength + 1"
     else
         if upgrade < PlayerStrength + PlayerAgility then
             DummyAgility = DummyAgility + 1
+            print "Agility + 1"
         else
             if upgrade < PlayerStrength + DummyAgility + PlayerVitality then
                 PlayerVitality = PlayerVitality + 1
+                print "Vitality + 1"
             end if
         end if
     end if
