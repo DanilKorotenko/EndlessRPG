@@ -112,6 +112,18 @@ do
             PRINT "and " ;DummyGold; " GOLD"
             PRINT "your total XP: " ; PlayerXP
             PRINT "your total gold: " ; PlayerGold
+            ' check for level up
+            levelsToUp = PlayerXP % levelXP()
+            if (levelsToUp > 0) then
+                for i = 0 to levelsToUp
+                    PlayerLevel = PlayerLevel + 1
+                    description$=""
+                    call levelUp PlayerVitality, PlayerStrength, PlayerAgility, description$
+                    if (len(description)>0) then
+                        print description$
+                    end if
+                next i
+            end if
             GameRound = GameRound + 1
             ' go to the next round
             exit do
