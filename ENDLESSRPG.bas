@@ -58,14 +58,12 @@ CALL waitMilliseconds 1000
 do
     print
     print "Round: "; GameRound
-
     IF GameRound MOD 10 = 0 THEN
         call generateDummy 4 ' BOSS
     else
         randomDummy=randInRange(1,3)
         call generateDummy randomDummy
     end if
-
     PRINT DummyName$; " HAS APEARED!"
     print DummyName$ ;"'s Health: "; DummyHealth
     print "your health: "; PlayerCurrentHealth; "/"; PlayerMaxHealth
@@ -174,7 +172,6 @@ sub generateDummy aDummyIndex
     DummyVitalities(1) = 1
     DummyStrengths(1) = 1
     DummyAgility(1) = 1
-
     DummyNames$(2) = "Vegetiod"
     DummySpares(2) = 2
     DummyHappys(2) = 1
@@ -182,7 +179,6 @@ sub generateDummy aDummyIndex
     DummyVitalities(2) = 1
     DummyStrengths(2) = 1
     DummyAgility(2) = 1
-
     DummyNames$(3) = "Moldsmal"
     DummySpares(3) = 2
     DummyHappys(3) = 1
@@ -190,7 +186,6 @@ sub generateDummy aDummyIndex
     DummyVitalities(3) = 1
     DummyStrengths(3) = 1
     DummyAgility(3) = 1
-
     DummyNames$(4) = "Anton2012" ' BOSS
     DummySpares(4) = 2
     DummyHappys(4) = 1
@@ -198,27 +193,22 @@ sub generateDummy aDummyIndex
     DummyVitalities(4) = 1
     DummyStrengths(4) = 1
     DummyAgility(4) = 1
-
     DummySpare = DummySpares(aDummyIndex)
     DummyHappy = DummyHappys(aDummyIndex)
     DummyName$ = DummyNames$(aDummyIndex)
     DummyDialogue$ = DummyDialogues$(aDummyIndex)
-
     levelDiff=1
     DummyLevel = randInRange(PlayerLevel-levelDiff, PlayerLevel+levelDiff)
     if (DummyLevel < 1) then DummyLevel = 1
-
     DummyVitality = DummyVitalities(aDummyIndex)
     DummyStrength = DummyStrengths(aDummyIndex)
     DummyAgility = DummyAgility(aDummyIndex)
-
     if DummyLevel > 1 then
         for i = 1 to DummyLevel
             description$=""
             call levelUp DummyVitality, DummyStrength, DummyAgility, description$
         next i
     end if
-
     DummyGold = randInRange(0, DummyLevel)
     DummyXP = DummyVitality + DummyStrength + DummyAgility
     DummyHealth = calculateMaxHP(DummyVitality, DummyStrength)
@@ -387,7 +377,6 @@ sub levelUp byref aVitality, byref aStrength, byref anAgility, byref aDescriptio
         end if
     end if
 end sub
-
 '////////////////////////////////////////////////////////////////////////
 ' SHOP
 sub SHOP
