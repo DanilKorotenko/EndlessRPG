@@ -313,8 +313,11 @@ end function
 function minATK(aStrength)
     minATK = int(aStrength / 2)
 end function
-function DF(anAgility)
-    DF = anAgility
+function maxDF(anAgility)
+    maxDF = anAgility
+end function
+function minDF(anAgility)
+    minDF = int(anAgility/2)
 end function
 function maxPlayerATK()
     weaponName$=""
@@ -330,12 +333,19 @@ function minPlayerATK()
     call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
     minPlayerATK = minATK(PlayerStrength) + weaponATK
 end function
-function playerDF()
+function maxPlayerDF()
     armorName$=""
     armorDF=0
     armorPrice=0
     call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
-    playerDF = DF(PlayerAgility) + armorDF
+    maxPlayerDF = maxDF(PlayerAgility) + armorDF
+end function
+function minPlayerDF()
+    armorName$=""
+    armorDF=0
+    armorPrice=0
+    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+    minPlayerDF = minDF(PlayerAgility) + armorDF
 end function
 function maxDummyATK()
     maxDummyATK = maxATK(DummyStrength)
@@ -343,8 +353,11 @@ end function
 function minDummyATK()
     minDummyATK = minATK(DummyStrength)
 end function
-function dummyDF()
-    dummyDF = DF(DummyAgility)
+function maxDummyDF()
+    maxDummyDF = maxDF(DummyAgility)
+end function
+function minDummyDF()
+    minDummyDF = minDF(DummyAgility)
 end function
 sub printPlayerArmor
     armorName$=""
@@ -635,7 +648,7 @@ sub MyInfo
     print "Strength (affects ATK):"; PlayerStrength
     print "Agility (affects DF):"; PlayerAgility
     print "ATK: "; minPlayerATK(); "-"; maxPlayerATK()
-    print "DF: "; playerDF()
+    print "DF: "; minPlayerDF(); "-"; maxPlayerDF()
     print "Gold: "; PlayerGold
     call printPlayerArmor
     call printPlayerWeapon
@@ -654,7 +667,7 @@ sub DummyInfo
     print "HP: "; DummyHealth
     print "Level: "; DummyLevel; " XP: "; DummyXP
     print "ATK: "; minDummyATK(); "-"; maxDummyATK()
-    print "DF: "; dummyDF()
+    print "DF: "; minDummyDF(); "-"; maxDummyDF()
     print "Gold: "; DummyGold
     print
 end sub
