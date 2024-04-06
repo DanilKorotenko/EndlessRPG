@@ -77,6 +77,7 @@ do
         PRINT "3. ITEM"
         PRINT "4. MERCY"
         print "5. Info about me"
+        print "6. Info about "; DummyName
         PRINT DummyName$; ": " ;DummyDialogue$
         INPUT "Action:" ;actionChoice
         SELECT CASE actionChoice
@@ -90,6 +91,8 @@ do
                 call MERCY
             CASE 5
                 call MyInfo
+            CASE 6
+                call DummyInfo
             CASE ELSE
                 PRINT "Invalid choice. Please enter a number from the menu."
         END SELECT
@@ -597,6 +600,9 @@ sub MyInfo
     print "Vitality (affects max HP):"; PlayerVitality
     print "Strength (affects ATK):"; PlayerStrength
     print "Agility (affects DF):"; PlayerAgility
+'TODO load player weapon
+    print "ATK: "; minATK(PlayerStrength); "-"; maxATK(PlayerStrength)
+    print "DF: "; minDF(PlayerAgility); "-"; maxDF(PlayerAgility)
     print "Gold: "; PlayerGold
     call printPlayerArmor
     call printPlayerWeapon
@@ -608,4 +614,12 @@ sub MyInfo
         call loadItem itemIndex, itemName$, itemHP, itemPrice
         PRINT PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; ". It gives "; itemHP; " HP."
     next itemIndex
+end sub
+sub DummyInfo
+    print DummyName$
+    print "HP: "; DummyHealth
+    print "Level: "; DummyLevel; " XP: "; DummyXP
+    print "ATK: "; minATK(DummyStrength); "-"; maxATK(DummyStrength)
+    print "DF: "; minDF(DummyAgility); "-"; maxDF(DummyAgility)
+    print "Gold: "; DummyGold
 end sub
