@@ -635,6 +635,7 @@ sub MyInfo
         call loadItem itemIndex, itemName$, itemHP, itemPrice
         PRINT PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; ". It gives "; itemHP; " HP."
     next itemIndex
+    print
 end sub
 sub DummyInfo
     print DummyName$
