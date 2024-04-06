@@ -116,8 +116,8 @@ do
                 for i = 0 to levelsToUp
                     PlayerLevel = PlayerLevel + 1
                     description$=""
-                    call levelUp PlayerVitality, PlayerStrength, PlayerAgility, description$
-                    if (len(description)>0) then
+                    call levelPlayerUp description$
+                    if (len(description$)>0) then
                         print description$
                     end if
                 next i
@@ -369,6 +369,21 @@ sub levelDummyUp
         else
             if upgrade < DummyStrength + DummyAgility + DummyVitality then
                 DummyVitality = DummyVitality + 1
+            end if
+        end if
+    end if
+end sub
+sub levelPlayerUp byref aDescription$
+    skill = PlayerVitality + PlayerStrength + PlayerAgility
+    upgrade = randInRange(0, skill)
+    if (upgrade < PlayerStrength) then
+        PlayerStrength = PlayerStrength + 1
+    else
+        if upgrade < PlayerStrength + PlayerAgility then
+            DummyAgility = DummyAgility + 1
+        else
+            if upgrade < PlayerStrength + DummyAgility + PlayerVitality then
+                PlayerVitality = PlayerVitality + 1
             end if
         end if
     end if
