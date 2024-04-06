@@ -640,4 +640,5 @@ sub DummyInfo
     print "ATK: "; minDummyATK(); "-"; maxDummyATK()
     print "DF: "; dummyDF()
     print "Gold: "; DummyGold
+    print
 end sub
