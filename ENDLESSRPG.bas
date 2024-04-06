@@ -329,6 +329,34 @@ end function
 function minDF(anAgility)
     minDF = int(anAgility / 2)
 end function
+function maxPlayerATK()
+    weaponName$=""
+    weaponATK=0
+    weaponPrice=0
+    call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
+    maxPlayerATK = maxATK(PlayerStrength) + weaponATK
+end function
+function minPlayerATK()
+    weaponName$=""
+    weaponATK=0
+    weaponPrice=0
+    call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
+    minPlayerATK = minATK(PlayerStrength) + weaponATK
+end function
+function maxPlayerDF()
+    armorName$=""
+    armorDF=0
+    armorPrice=0
+    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+    maxPlayerDF = maxDF(PlayerAgility) + armorDF
+end function
+function minPlayerDF()
+    armorName$=""
+    armorDF=0
+    armorPrice=0
+    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
+    minPlayerDF = minDF(PlayerAgility) + armorDF
+end function
 sub printPlayerArmor
     armorName$=""
     armorDF=0
@@ -612,16 +640,8 @@ sub MyInfo
     print "Vitality (affects max HP):"; PlayerVitality
     print "Strength (affects ATK):"; PlayerStrength
     print "Agility (affects DF):"; PlayerAgility
-    armorName$=""
-    armorDF=0
-    armorPrice=0
-    call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
-    weaponName$=""
-    weaponATK=0
-    weaponPrice=0
-    call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
-    print "ATK: "; minATK(PlayerStrength)+weaponATK; "-"; maxATK(PlayerStrength)+weaponATK
-    print "DF: "; minDF(PlayerAgility)+armorDF; "-"; maxDF(PlayerAgility)+armorDF
+    print "ATK: "; minPlayerATK(); "-"; maxPlayerATK()
+    print "DF: "; minPlayerDF(); "-"; maxPlayerDF()
     print "Gold: "; PlayerGold
     call printPlayerArmor
     call printPlayerWeapon
