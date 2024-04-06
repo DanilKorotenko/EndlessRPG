@@ -10,10 +10,15 @@ global WeaponsSize
 WeaponsSize = 4
 ' Player Variables
 global PlayerCurrentHealth
+global PlayerMaxHealth
+global PlayerLevel
 global PlayerXP
 global PlayerGold
 global PlayerCurrentArmor ' an index of current player armor from armors array
 global PlayerCurrentWeapon ' an index of current player weapon from weapons array
+global PlayerVitality
+global PlayerStrength
+global PlayerAgility
 call initPlayerVariables
 ' this is an array of items quatities. it has the same size as ItemsSize, the items in this array is quantities of items in player inventory
 global PlayerInventoryItemsQuantities
@@ -139,7 +144,12 @@ END
 ' SUBROUTINES AREA /////////////////////////////////////////////
 sub initPlayerVariables
     ' initial values of player variables
-    PlayerCurrentHealth = 20 + (PlayerXP - 1) * 4
+    PlayerVitality = 1
+    PlayerStrength = 1
+    PlayerAgility = 1
+    PlayerMaxHealth = calculateMaxHP(PlayerVitality, PlayerStrength)
+    PlayerCurrentHealth = PlayerMaxHealth
+    PlayerLevel=1
     PlayerXP = 0
     PlayerGold = 0
     PlayerCurrentArmor = 1 'Bandage
@@ -260,6 +270,24 @@ sub waitMilliseconds aMillisecondsDelay
 end sub
 function randInRange(aRangeMin, aRangeMax)
     randInRange = int(rnd(1)*(aRangeMax - aRangeMin))+aRangeMin
+end function
+function calculateMaxHP(aVitality, aStrength)
+    calculateMaxHP = 10 + (aVitality * 5) + aStrength
+end function
+function levelXP '(aLevel)
+    levelXP = 10 * PlayerLevel' aLevel
+end function
+function maxATK(aStrength)
+    maxATK = aStrength
+end function
+function minATK(aStrength)
+    minATK = int(aStrength / 2)
+end function
+function maxDF(anAgility)
+    maxDF = anAgility
+end function
+function minDF(anAgility)
+    minDF = int(anAgility / 2)
 end function
 sub printPlayerArmor
     armorName$=""
