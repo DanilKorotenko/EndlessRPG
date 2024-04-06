@@ -68,7 +68,7 @@ do
 
     PRINT DummyName$; " HAS APEARED!"
     print DummyName$ ;"'s Health: "; DummyHealth
-    print "your health: "; PlayerCurrentHealth
+    print "your health: "; PlayerCurrentHealth; "/"; PlayerMaxHealth
     ' fighting loop
     DO
         'each time we print menu
