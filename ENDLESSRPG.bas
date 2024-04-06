@@ -198,8 +198,9 @@ sub generateDummy aDummyIndex
     DummyName$ = DummyNames$(aDummyIndex)
     DummyDialogue$ = DummyDialogues$(aDummyIndex)
     levelDiff=1
-    DummyLevel = randInRange(PlayerLevel-levelDiff, PlayerLevel+levelDiff)
-    if (DummyLevel < 1) then DummyLevel = 1
+    minDummyLevel = PlayerLevel-levelDiff
+    if (minDummyLevel<1) then minDummyLevel = 1
+    DummyLevel = randInRange(minDummyLevel, PlayerLevel+levelDiff)
     DummyVitality = DummyVitalities(aDummyIndex)
     DummyStrength = DummyStrengths(aDummyIndex)
     DummyAgility = DummyAgilities(aDummyIndex)
