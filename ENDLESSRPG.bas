@@ -105,13 +105,13 @@ do
             DummySpare=DummySpare=-1
         end if
         if DummyHealth <= 0 then
-            PlayerXP=PlayerXP+int(rnd(1)*2)
-            obtainedGold = int(rnd(1)*10)
-            PlayerGold = PlayerGold + obtainedGold
+            PlayerXP=PlayerXP+DummyXP
+            PlayerGold = PlayerGold + DummyGold
             PRINT "YOU WON!"
-            PRINT "you got " ;PlayerXP; " XP"
-            PRINT "and " ;obtainedGold; " GOLD"
-            PRINT "your total gold " ; PlayerGold
+            PRINT "you got " ;DummyXP; " XP"
+            PRINT "and " ;DummyGold; " GOLD"
+            PRINT "your total XP: " ; PlayerXP
+            PRINT "your total gold: " ; PlayerGold
             GameRound = GameRound + 1
             ' go to the next round
             exit do
