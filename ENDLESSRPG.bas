@@ -203,7 +203,7 @@ sub generateDummy aDummyIndex
     if DummyLevel > 1 then
         for i = 1 to DummyLevel
             description$=""
-            call levelUp DummyVitality, DummyStrength, DummyAgility, description
+            call levelUp DummyVitality, DummyStrength, DummyAgility, description$
         next i
     end if
 
@@ -330,20 +330,20 @@ sub printPlayerWeapon
     weaponPrice=0
     call loadWeapon PlayerCurrentWeapon, weaponName$, weaponATK, weaponPrice
 end sub
-sub levelUp byref aVitality, byref aStrength, byref anAgility, byref aDescription
+sub levelUp byref aVitality, byref aStrength, byref anAgility, byref aDescription$
     skill = aVitality + aStrength + anAgility
     upgrade = randInRange(0, skill)
     if (upgrade < aStrength) then
         aStrength = aStrength + 1
-        aDescription = "Strength + 1"
+        aDescription$ = "Strength + 1"
     else
         if upgrade < aStrength + anAgility then
             anAgility = anAgility + 1
-            aDescription = "Agility + 1"
+            aDescription$ = "Agility + 1"
         else
             if upgrade < aStrength + anAgility + aVitality then
                 aVitality = aVitality + 1
-                aDescription = "Vitality + 1"
+                aDescription$ = "Vitality + 1"
             end if
         end if
     end if
