@@ -253,9 +253,9 @@ sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     anItemPrice = ItemsPrices(anItemIndex)
 end sub
 sub loadArmor anArmorIndex, byref anArmorName$, byref anArmorDF, byref anArmorPrice
-    ArmorNames$(1) = "Bandage"
-    ArmorPrices(1) = 1
-    ArmorDFs(1) = 1
+    ArmorNames$(1) = "Nothing"'"Bandage"
+    ArmorPrices(1) = 0 '1
+    ArmorDFs(1) = 0 '1
     ArmorNames$(2) = "Light shield"
     ArmorPrices(2) = 5
     ArmorDFs(2) = 5
@@ -271,9 +271,9 @@ sub loadArmor anArmorIndex, byref anArmorName$, byref anArmorDF, byref anArmorPr
     anArmorPrice = ArmorPrices(anArmorIndex)
 end sub
 sub loadWeapon aWeaponIndex, byref aWeaponName$, byref aWeaponATK, byref aWeaponPrice
-    WeaponNames$(1) = "Stick"
-    WeaponPrices(1) = 1
-    WeaponATKs(1) = 2
+    WeaponNames$(1) = "Nothing"'"Stick"
+    WeaponPrices(1) = 0 '1
+    WeaponATKs(1) = 0 '2
     WeaponNames$(2) = "Light Weapon"
     WeaponPrices(2) = 5
     WeaponATKs(2) = 5
