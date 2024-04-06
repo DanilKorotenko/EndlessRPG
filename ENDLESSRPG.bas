@@ -58,10 +58,14 @@ CALL waitMilliseconds 1000
 do
     print
     print "Round: "; GameRound
-    ' crete new dummy here
-    ' assign to it some random name
-    randomDummy=randInRange(1,3)
-    call generateDummy randomDummy
+
+    IF GameRound MOD 10 = 0 THEN
+        call generateDummy 4 ' BOSS
+    else
+        randomDummy=randInRange(1,3)
+        call generateDummy randomDummy
+    end if
+
     PRINT DummyName$; " HAS APEARED!"
     print DummyName$ ;"'s Health: "; DummyHealth
     print "your health: "; PlayerCurrentHealth
@@ -131,21 +135,6 @@ do
     IF GameRound MOD 3 = 0 THEN
         call SHOP
     end if
-    IF GameRound MOD 1 = 0 THEN
-       rndenm = int(rnd(1)*3)
-    IF rndenm = 1 THEN
-    CALL vegetoid
-    end if
-    IF rndenm = 2 THEN
-    CALL froggit
-    end if
-    IF rndenm = 3 THEN
-    CALL moldsmal
-    end if
-    end if
-    IF GameRound MOD 10 = 0 THEN
-        call BOSS
-   end if
 LOOP UNTIL TRUE
 END
 ' SUBROUTINES AREA /////////////////////////////////////////////
