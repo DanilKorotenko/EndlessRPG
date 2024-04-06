@@ -357,6 +357,18 @@ function minPlayerDF()
     call loadArmor PlayerCurrentArmor, armorName$, armorDF, armorPrice
     minPlayerDF = minDF(PlayerAgility) + armorDF
 end function
+function maxDummyATK()
+    maxDummyATK = maxATK(DummyStrength)
+end function
+function minDummyATK()
+    minDummyATK = minATK(DummyStrength)
+end function
+function maxDummyDF()
+    maxDummyDF = maxDF(DummyAgility)
+end function
+function minDummyDF()
+    minDummyDF = minDF(DummyAgility)
+end function
 sub printPlayerArmor
     armorName$=""
     armorDF=0
@@ -658,7 +670,7 @@ sub DummyInfo
     print DummyName$
     print "HP: "; DummyHealth
     print "Level: "; DummyLevel; " XP: "; DummyXP
-    print "ATK: "; minATK(DummyStrength); "-"; maxATK(DummyStrength)
-    print "DF: "; minDF(DummyAgility); "-"; maxDF(DummyAgility)
+    print "ATK: "; minDummyATK(); "-"; maxDummyATK()
+    print "DF: "; minDummyDF(); "-"; maxDummyDF()
     print "Gold: "; DummyGold
 end sub
