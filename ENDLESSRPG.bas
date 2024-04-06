@@ -364,7 +364,7 @@ sub levelDummyUp
     if (upgrade < DummyStrength) then
         DummyStrength = DummyStrength + 1
     else
-        if upgrade < DummyStrength + anAgility then
+        if upgrade < DummyStrength + DummyAgility then
             DummyAgility = DummyAgility + 1
         else
             if upgrade < DummyStrength + DummyAgility + DummyVitality then
