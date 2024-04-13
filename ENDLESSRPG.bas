@@ -209,6 +209,9 @@ sub initPlayerInventory
     PlayerInventoryItemsQuantities(3) = 1               '"Cinnamon-Buttersctotch Pie"
     PlayerInventoryItemsQuantities(4) = int(rnd(1)*2)   '"Monster Candy"
     PlayerInventoryItemsQuantities(5) = int(rnd(1)*7)   '"Spider Donut"
+    PlayerInventoryItemsQuantities(6) = 0               'some berries
+    PlayerInventoryItemsQuantities(7) = 0               ' artefact
+    PlayerInventoryItemsQuantities(8) = 0               ' key
 end sub
 sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     ItemsNames$(1) = "Crab Apple"
@@ -561,7 +564,7 @@ end sub
 ' ////////////////////////////////////////////////////////////////////////
 sub SEARCHINBUSHES
     print "You searched in bushes."
-    if (randInRange(0, 100) < 20) then
+    if (randInRange(0, 100) < 20) and (PlayerInventoryItemsQuantities(7)=0) then
         print "You found strange artefact."
         ' add artefac to to inventory
         PlayerInventoryItemsQuantities(7)=1
@@ -601,7 +604,7 @@ sub FINALINCASTLE
 end sub
 sub STRANGER
     ' if player has artefact
-    if (PlayerInventoryItemsQuantities(7)>1) then
+    if (PlayerInventoryItemsQuantities(7)>0) then
         print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
         print "You has a key from castle now."
         print "You know castle location now."
@@ -610,7 +613,7 @@ sub STRANGER
         PlayerInventoryItemsQuantities(7)=0
         castleDiscovered=1
     else
-        if (PlayerInventoryItemsQuantities(8)=1) then
+        if (PlayerInventoryItemsQuantities(8)>0) then
             Print "I already gave you a key. Why did you come back?"
             print "You went away from stranger"
         else
