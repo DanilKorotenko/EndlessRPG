@@ -103,7 +103,7 @@ do
     if (strangerDiscovered = 1) then
         print "6. Go to stranger and talk to him"
     end if
-    input "Action choise:"; actionChoise
+    input "Action choise:"; actionChoice
     SELECT CASE actionChoice
         CASE 1
             PRINT "You walked around a bit."
