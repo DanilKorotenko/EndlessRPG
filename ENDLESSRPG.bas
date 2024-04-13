@@ -134,9 +134,6 @@ do
     if PlayerCurrentHealth <= 0 then
         exit do
     end if
-    IF DummySpare=0 THEN
-        exit do
-    end if
 LOOP UNTIL TRUE
 END
 ' SUBROUTINES AREA /////////////////////////////////////////////
