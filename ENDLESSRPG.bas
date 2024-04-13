@@ -600,8 +600,10 @@ sub ITEM
         itemName$=""
         itemHP=0
         itemPrice=0
-        call loadItem itemIndex, itemName$, itemHP, itemPrice
-        PRINT itemIndex; ". "; PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; " gives "; itemHP; " HP"
+        IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
+            call loadItem itemIndex, itemName$, itemHP, itemPrice
+            PRINT itemIndex; ". "; PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; " gives "; itemHP; " HP"
+        end if
     next itemIndex
     INPUT "Item:" ;itemChoice
     itemName$=""
@@ -651,8 +653,10 @@ sub MyInfo
         itemName$=""
         itemHP=0
         itemPrice=0
-        call loadItem itemIndex, itemName$, itemHP, itemPrice
-        PRINT PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; ". It gives "; itemHP; " HP."
+        IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
+            call loadItem itemIndex, itemName$, itemHP, itemPrice
+            PRINT PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; ". It gives "; itemHP; " HP."
+        end if
     next itemIndex
     print
 end sub
