@@ -90,18 +90,19 @@ do
     print "Choose what to do:"
     print "1. walk around"
     print "2. Go to trader"
+    print "3. Info about me"
     if (seeDummy=1) then
-        print "3. Attack "; DummyName$
+        print "4. Attack "; DummyName$
     end if
     
     if (seeBushes = 1) then
-        print "4. Search in bushes"
+        print "5. Search in bushes"
     end if
     if (castleDiscovered = 1) then
-        print "5. Go to castle"
+        print "6. Go to castle"
     end if
     if (strangerDiscovered = 1) then
-        print "6. Go to stranger and talk to him"
+        print "7. Go to stranger and talk to him"
     end if
     input "Action choise:"; actionChoice
     SELECT CASE actionChoice
@@ -110,18 +111,20 @@ do
         CASE 2
             call SHOP
         CASE 3
+            call MyInfo
+        CASE 4
             if (seeDummy=1) then
                 call BATTLE
             end if
-        case 4
+        case 5
             if (seeBushes = 1) then
                 call SEARCHINBUSHES
             end if
-        case 5
+        case 6
             if (castleDiscovered = 1) then
                 call CASTLE
             end if
-        case 6
+        case 7
             if (strangerDiscovered = 1) then
                 call STRANGER
             end if
