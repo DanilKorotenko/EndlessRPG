@@ -597,7 +597,7 @@ sub FINALINCASTLE
     Print "Thank you!"
     gameFinish=true
 end sub
-sub call STRANGER
+sub STRANGER
     ' if player has artefact
     if (PlayerInventoryItemsQuantities(7)>1) then
         print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
