@@ -64,78 +64,9 @@ do
         randomDummy=randInRange(1,3)
         call generateDummy randomDummy
     end if
-    PRINT DummyName$; " HAS APEARED!"
-    print DummyName$ ;"'s Health: "; DummyHealth
-    print "your health: "; PlayerCurrentHealth; "/"; PlayerMaxHealth
-    ' fighting loop
-    DO
-        'each time we print menu
-        PRINT "1. FIGHT"
-        PRINT "2. ACT"
-        PRINT "3. ITEM"
-        PRINT "4. MERCY"
-        print "5. Info about me"
-        print "6. Info about "; DummyName$
-        PRINT DummyName$; ": " ;DummyDialogue$
-        INPUT "Action:" ;actionChoice
-        SELECT CASE actionChoice
-            CASE 1
-                call FIGHT
-            CASE 2
-                call ACT
-            CASE 3
-                call ITEM
-            CASE 4
-                call MERCY
-            CASE 5
-                call MyInfo
-            CASE 6
-                call DummyInfo
-            CASE ELSE
-                PRINT "Invalid choice. Please enter a number from the menu."
-        END SELECT
-        if PlayerCurrentHealth <= 0 then
-            Print "You loose"
-            exit do
-        end if
-        if DummyHappy = 0 then
-            PRINT DummyName$; " is smiling"
-            DummySpare=DummySpare=-1
-        end if
-        if DummyHealth <= 0 then
-            PlayerXP=PlayerXP+DummyXP
-            PlayerGold = PlayerGold + DummyGold
-            PRINT "YOU WON!"
-            PRINT "you got " ;DummyXP; " XP"
-            PRINT "and " ;DummyGold; " GOLD"
-            PRINT "your total XP: " ; PlayerXP; " / "; levelXP()
-            PRINT "your total gold: " ; PlayerGold
-            ' check for level up
-            levelsToUp = int(PlayerXP / levelXP())
-            if (levelsToUp>0) then
-                for i = 1 to levelsToUp
-                    print "Level up!"
-                    PlayerLevel = PlayerLevel + 1
-                    call levelPlayerUp
-                next i
-            end if
-            GameRound = GameRound + 1
-            ' go to the next round
-            exit do
-        end if
-        IF DummySpare=0 THEN
-            PlayerXP=PlayerXP+int(rnd(1)*2)
-            obtainedGold = int(rnd(1)*10)
-            PlayerGold = PlayerGold + obtainedGold
-            PRINT "YOU WON!"
-            PRINT DummyName$
-            PRINT "you got " ;PlayerXP; " XP"
-            PRINT "and " ;obtainedGold; " GOLD"
-            PRINT "your total gold " ; PlayerGold
-            GameRound = GameRound + 1
-            exit do
-        end if
-    LOOP UNTIL TRUE
+
+    call BATTLE
+
     if PlayerCurrentHealth <= 0 then
         exit do
     end if
@@ -565,6 +496,83 @@ sub SHOPWEAPONS
             end if
         end if
     loop until true
+end sub
+' ////////////////////////////////////////////////////////////////////////
+sub WALKAROUND
+end sub
+sub BATTLE
+    PRINT DummyName$; " HAS APEARED!"
+    print DummyName$ ;"'s Health: "; DummyHealth
+    print "your health: "; PlayerCurrentHealth; "/"; PlayerMaxHealth
+    ' fighting loop
+    DO
+        'each time we print menu
+        PRINT "1. FIGHT"
+        PRINT "2. ACT"
+        PRINT "3. ITEM"
+        PRINT "4. MERCY"
+        print "5. Info about me"
+        print "6. Info about "; DummyName$
+        PRINT DummyName$; ": " ;DummyDialogue$
+        INPUT "Action:" ;actionChoice
+        SELECT CASE actionChoice
+            CASE 1
+                call FIGHT
+            CASE 2
+                call ACT
+            CASE 3
+                call ITEM
+            CASE 4
+                call MERCY
+            CASE 5
+                call MyInfo
+            CASE 6
+                call DummyInfo
+            CASE ELSE
+                PRINT "Invalid choice. Please enter a number from the menu."
+        END SELECT
+        if PlayerCurrentHealth <= 0 then
+            Print "You loose"
+            exit do
+        end if
+        if DummyHappy = 0 then
+            PRINT DummyName$; " is smiling"
+            DummySpare=DummySpare=-1
+        end if
+        if DummyHealth <= 0 then
+            PlayerXP=PlayerXP+DummyXP
+            PlayerGold = PlayerGold + DummyGold
+            PRINT "YOU WON!"
+            PRINT "you got " ;DummyXP; " XP"
+            PRINT "and " ;DummyGold; " GOLD"
+            PRINT "your total XP: " ; PlayerXP; " / "; levelXP()
+            PRINT "your total gold: " ; PlayerGold
+            ' check for level up
+            levelsToUp = int(PlayerXP / levelXP())
+            if (levelsToUp>0) then
+                for i = 1 to levelsToUp
+                    print "Level up!"
+                    PlayerLevel = PlayerLevel + 1
+                    call levelPlayerUp
+                next i
+            end if
+            GameRound = GameRound + 1
+            ' go to the next round
+            exit do
+        end if
+        IF DummySpare=0 THEN
+            PlayerXP=PlayerXP+int(rnd(1)*2)
+            obtainedGold = int(rnd(1)*10)
+            PlayerGold = PlayerGold + obtainedGold
+            PRINT "YOU WON!"
+            PRINT DummyName$
+            PRINT "you got " ;PlayerXP; " XP"
+            PRINT "and " ;obtainedGold; " GOLD"
+            PRINT "your total gold " ; PlayerGold
+            GameRound = GameRound + 1
+            exit do
+        end if
+    LOOP UNTIL TRUE
 end sub
 ' FIGHT ACT ITEM MERCY
 sub FIGHT
