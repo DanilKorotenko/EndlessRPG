@@ -37,6 +37,12 @@ global DummyAgility
 global DummyXP
 ' Game Variables
 GameRound = 1
+global strangerDiscovered
+strangerDiscovered=false
+global castleDiscovered
+castleDiscovered=false
+global gameFinish
+global gameFinish=false
 'round loop
 PRINT " __         __         __    __   __ "
 PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
@@ -57,24 +63,85 @@ PRINT "Lead Programer"
 CALL waitMilliseconds 1000
 do
     print
-    print "Round: "; GameRound
-    IF GameRound MOD 10 = 0 THEN
-        call generateDummy 4 ' BOSS
-    else
+    print "you are in the forest."
+    seeDummy=false
+    seeBushes = false
+    if (randInRange(0, 100) < 20) then
         randomDummy=randInRange(1,3)
         call generateDummy randomDummy
+        print "You see "; DummyName$; " Is going."
+        seeDummy=true
+    else
+        if (randInRange(0, 100) < 20) then
+            print "You are near some bushes."
+            seeBushes = true
+        else
+            if (randInRange(0, 100) < 20) then
+                print "You are near ancient castle."
+                castleDiscovered = true
+            else
+                if (randInRange(0, 100) < 20) and (strangerDiscovered =false) then
+                    print "You met stranger."
+                    strangerDiscovered=true
+                end if
+            end if
+        end if
     end if
 
-    call BATTLE
+    print "Choose what to do:"
+    print "1. walk around"
+    print "2. Go to trader"
+    if (seeDummy=true) then
+        print "3. Attack "; DummyName$
+    end if
+    
+    if (seeBushes = true) then
+        print "4. Search in bushes"
+    end if
 
+    if (castleDiscovered = true) then
+        print "5. Go to castle"
+    end if
+
+    if (strangerDiscovered = true) then
+        print "6. Go to stranger and talk to him"
+    end if
+
+    input "Action choise:"; actionChoise
+
+    SELECT CASE actionChoice
+        CASE 1
+            PRINT "You walked around a bit."
+        CASE 2
+            call SHOP
+        CASE 3
+            if (seeDummy=true) then
+                call BATTLE
+            end if
+        case 4
+            if (seeBushes = true) then
+                call SEARCHINBUSHES
+            end if
+        case 5
+            if (castleDiscovered = true) then
+                call CASTLE
+            end if
+        case 6
+            if (strangerDiscovered = true) then
+                call STRANGER
+            end if
+        CASE ELSE
+            PRINT "You walked around a bit."
+    END SELECT
+
+    if (gameFinish=true)
+        exit do
+    end if
     if PlayerCurrentHealth <= 0 then
         exit do
     end if
     IF DummySpare=0 THEN
         exit do
-    end if
-    IF GameRound MOD 3 = 0 THEN
-        call SHOP
     end if
 LOOP UNTIL TRUE
 END
@@ -498,7 +565,63 @@ sub SHOPWEAPONS
     loop until true
 end sub
 ' ////////////////////////////////////////////////////////////////////////
-sub WALKAROUND
+sub SEARCHINBUSHES
+    print "You searched in bushes."
+    if (randInRange(0, 100) < 20) then
+        print "You found strange artefact."
+        ' add artefac to to inventory
+        PlayerInventoryItemsQuantities(7)=1
+    else
+        if (randInRange(0, 100) < 50) then
+            print "You found unknown berries."
+            PlayerInventoryItemsQuantities(6)=PlayerInventoryItemsQuantities(6)+1
+        else 
+            print "You found nothing and went away."
+        end if
+    end if
+end sub
+sub CASTLE
+    print "You are near the ancient castle."
+    print "You see a big door. The door is definitely requires a key."
+    print "Choose waht to do:"
+    print "1. Walk away"
+    if (PlayerInventoryItemsQuantities(8)=1) then
+        print "2. Use the key for the door of the castle"
+    end if
+    INPUT "You choise:" ;actionChoice
+    SELECT CASE actionChoice
+        CASE 1
+            PRINT "You walked away."
+        CASE 2
+            call FINALINCASTLE
+        CASE ELSE
+            PRINT "You walked away."
+    END SELECT
+end sub
+sub FINALINCASTLE
+    Print "Congratulations! You just finished this game, and found good ending!"
+    Print "Thank you!"
+    gameFinish=true
+end sub
+sub call STRANGER
+    ' if player has artefact
+    if (PlayerInventoryItemsQuantities(7)>1) then
+        print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
+        print "You has a key from castle now."
+        print "You know castle location now."
+            print "You went away from stranger"
+        PlayerInventoryItemsQuantities(8)=1
+        PlayerInventoryItemsQuantities(7)=0
+        castleDiscovered=true
+    else
+        if (PlayerInventoryItemsQuantities(8)=1) then
+            Print "I already gave you a key. Why did you come back?"
+            print "You went away from stranger"
+        else
+            print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+            print "You went away from stranger"
+        end if
+    end if
 end sub
 sub BATTLE
     PRINT DummyName$; " HAS APEARED!"
