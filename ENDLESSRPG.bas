@@ -611,8 +611,8 @@ sub ITEM
         itemName$=""
         itemHP=0
         itemPrice=0
-        IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
-            call loadItem itemIndex, itemName$, itemHP, itemPrice
+        call loadItem itemIndex, itemName$, itemHP, itemPrice
+        IF (PlayerInventoryItemsQuantities(itemIndex)>0) and (itemHP>0) THEN
             PRINT itemIndex; ". "; PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; " gives "; itemHP; " HP"
         end if
     next itemIndex
@@ -667,7 +667,7 @@ sub MyInfo
         itemName$=""
         itemHP=0
         itemPrice=0
-        IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
+        IF PlayerInventoryItemsQuantities(itemIndex)>0 THEN
             call loadItem itemIndex, itemName$, itemHP, itemPrice
             PRINT PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; ". It gives "; itemHP; " HP."
         end if
