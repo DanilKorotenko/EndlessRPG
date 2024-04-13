@@ -3,7 +3,7 @@ rndSeed = time$("seconds") / 86400
 randomize rndSeed
 ' Item Variables
 global ItemsSize
-ItemsSize = 5 ' this variable should contain total number of all items
+ItemsSize = 8 ' this variable should contain total number of all items
 global ArmorsSize
 ArmorsSize = 4
 global WeaponsSize
@@ -234,6 +234,15 @@ sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     ItemsNames$(5) = "Spider Donut"
     ItemsPrices(5) = 5
     ItemsHPs(5) = 11
+    ItemsNames$(6) = "Unknown berries. What if you eat them? Will them kill you or heal?"
+    ItemsPrices(6) = 0
+    ItemsHPs(6) = 5
+    ItemsNames$(7) = "A strange artefact. You don't know what it is, and what it is for."
+    ItemsPrices(7) = 0
+    ItemsHPs(7) = 0
+    ItemsNames$(8) = "A key from ancient castle."
+    ItemsPrices(8) = 0
+    ItemsHPs(8) = 0
 ' fill output arguments
     anItemName$ = ItemsNames$(anItemIndex)
     anItemHP = ItemsHPs(anItemIndex)
@@ -444,9 +453,11 @@ sub SHOPITEMS
             itemHP=0
             itemPrice=0
             call loadItem itemIndex, itemName$, itemHP, itemPrice
-            PRINT itemIndex; ". "; itemName$; 
-            PRINT ". You have: "; PlayerInventoryItemsQuantities(itemIndex); 
-            PRINT ". It gives "; itemHP; " HP. It costs: "; itemPrice
+            if (itemPrice > 0) then
+                PRINT itemIndex; ". "; itemName$; 
+                PRINT ". You have: "; PlayerInventoryItemsQuantities(itemIndex); 
+                PRINT ". It gives "; itemHP; " HP. It costs: "; itemPrice
+            end if
         next itemIndex
         PRINT "0. back"
         INPUT "Choose item to buy:" ;itemChoice
