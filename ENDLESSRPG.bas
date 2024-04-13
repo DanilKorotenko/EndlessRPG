@@ -38,11 +38,11 @@ global DummyXP
 ' Game Variables
 GameRound = 1
 global strangerDiscovered
-strangerDiscovered=false
+strangerDiscovered=0
 global castleDiscovered
-castleDiscovered=false
+castleDiscovered=0
 global gameFinish
-gameFinish=false
+gameFinish=0
 'round loop
 PRINT " __         __         __    __   __ "
 PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
@@ -64,25 +64,25 @@ CALL waitMilliseconds 1000
 do
     print
     print "you are in the forest."
-    seeDummy=false
-    seeBushes = false
+    seeDummy=0
+    seeBushes = 0
     if (randInRange(0, 100) < 20) then
         randomDummy=randInRange(1,3)
         call generateDummy randomDummy
         print "You see "; DummyName$; " Is going."
-        seeDummy=true
+        seeDummy=1
     else
         if (randInRange(0, 100) < 20) then
             print "You are near some bushes."
-            seeBushes = true
+            seeBushes = 1
         else
             if (randInRange(0, 100) < 20) then
                 print "You are near ancient castle."
-                castleDiscovered = true
+                castleDiscovered = 1
             else
-                if (randInRange(0, 100) < 20) and (strangerDiscovered =false) then
+                if (randInRange(0, 100) < 20) and (strangerDiscovered =0) then
                     print "You met stranger."
-                    strangerDiscovered=true
+                    strangerDiscovered=1
                 end if
             end if
         end if
@@ -90,17 +90,17 @@ do
     print "Choose what to do:"
     print "1. walk around"
     print "2. Go to trader"
-    if (seeDummy=true) then
+    if (seeDummy=1) then
         print "3. Attack "; DummyName$
     end if
     
-    if (seeBushes = true) then
+    if (seeBushes = 1) then
         print "4. Search in bushes"
     end if
-    if (castleDiscovered = true) then
+    if (castleDiscovered = 1) then
         print "5. Go to castle"
     end if
-    if (strangerDiscovered = true) then
+    if (strangerDiscovered = 1) then
         print "6. Go to stranger and talk to him"
     end if
     input "Action choise:"; actionChoise
@@ -110,25 +110,25 @@ do
         CASE 2
             call SHOP
         CASE 3
-            if (seeDummy=true) then
+            if (seeDummy=1) then
                 call BATTLE
             end if
         case 4
-            if (seeBushes = true) then
+            if (seeBushes = 1) then
                 call SEARCHINBUSHES
             end if
         case 5
-            if (castleDiscovered = true) then
+            if (castleDiscovered = 1) then
                 call CASTLE
             end if
         case 6
-            if (strangerDiscovered = true) then
+            if (strangerDiscovered = 1) then
                 call STRANGER
             end if
         CASE ELSE
             PRINT "You walked around a bit."
     END SELECT
-    if (gameFinish=true) then
+    if (gameFinish=1) then
         exit do
     end if
     if PlayerCurrentHealth <= 0 then
@@ -595,7 +595,7 @@ end sub
 sub FINALINCASTLE
     Print "Congratulations! You just finished this game, and found good ending!"
     Print "Thank you!"
-    gameFinish=true
+    gameFinish=1
 end sub
 sub STRANGER
     ' if player has artefact
@@ -606,7 +606,7 @@ sub STRANGER
             print "You went away from stranger"
         PlayerInventoryItemsQuantities(8)=1
         PlayerInventoryItemsQuantities(7)=0
-        castleDiscovered=true
+        castleDiscovered=1
     else
         if (PlayerInventoryItemsQuantities(8)=1) then
             Print "I already gave you a key. Why did you come back?"
