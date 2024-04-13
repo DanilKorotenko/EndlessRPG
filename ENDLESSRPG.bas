@@ -76,7 +76,7 @@ do
             print "You are near some bushes."
             seeBushes = 1
         else
-            if (randInRange(0, 100) < 20) then
+            if (randInRange(0, 100) < 20) and (castleDiscovered =0) then
                 print "You are near ancient castle."
                 castleDiscovered = 1
             else
