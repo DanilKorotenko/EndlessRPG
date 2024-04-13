@@ -226,7 +226,7 @@ sub loadItem anItemIndex, byref anItemName$, byref anItemHP, byref anItemPrice
     ItemsNames$(5) = "Spider Donut"
     ItemsPrices(5) = 5
     ItemsHPs(5) = 11
-    ItemsNames$(6) = "Unknown berries. What if you eat them? Will them kill you or heal?"
+    ItemsNames$(6) = "Some berries."
     ItemsPrices(6) = 0
     ItemsHPs(6) = 5
     ItemsNames$(7) = "A strange artefact. You don't know what it is, and what it is for."
@@ -567,12 +567,13 @@ sub SEARCHINBUSHES
         PlayerInventoryItemsQuantities(7)=1
     else
         if (randInRange(0, 100) < 50) then
-            print "You found unknown berries."
+            print "You found some berries."
             PlayerInventoryItemsQuantities(6)=PlayerInventoryItemsQuantities(6)+1
         else 
             print "You found nothing and went away."
         end if
     end if
+    print
 end sub
 sub CASTLE
     print "You are near the ancient castle."
@@ -591,6 +592,7 @@ sub CASTLE
         CASE ELSE
             PRINT "You walked away."
     END SELECT
+    print
 end sub
 sub FINALINCASTLE
     Print "Congratulations! You just finished this game, and found good ending!"
@@ -616,6 +618,7 @@ sub STRANGER
             print "You went away from stranger"
         end if
     end if
+    print
 end sub
 sub BATTLE
     PRINT DummyName$; " HAS APEARED!"
