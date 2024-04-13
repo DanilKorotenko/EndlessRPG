@@ -128,7 +128,7 @@ do
         CASE ELSE
             PRINT "You walked around a bit."
     END SELECT
-    if (gameFinish=true)
+    if (gameFinish=true) then
         exit do
     end if
     if PlayerCurrentHealth <= 0 then
