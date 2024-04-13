@@ -42,7 +42,7 @@ strangerDiscovered=false
 global castleDiscovered
 castleDiscovered=false
 global gameFinish
-global gameFinish=false
+gameFinish=false
 'round loop
 PRINT " __         __         __    __   __ "
 PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
@@ -87,7 +87,6 @@ do
             end if
         end if
     end if
-
     print "Choose what to do:"
     print "1. walk around"
     print "2. Go to trader"
@@ -98,17 +97,13 @@ do
     if (seeBushes = true) then
         print "4. Search in bushes"
     end if
-
     if (castleDiscovered = true) then
         print "5. Go to castle"
     end if
-
     if (strangerDiscovered = true) then
         print "6. Go to stranger and talk to him"
     end if
-
     input "Action choise:"; actionChoise
-
     SELECT CASE actionChoice
         CASE 1
             PRINT "You walked around a bit."
@@ -133,7 +128,6 @@ do
         CASE ELSE
             PRINT "You walked around a bit."
     END SELECT
-
     if (gameFinish=true)
         exit do
     end if
