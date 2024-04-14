@@ -1,82 +1,53 @@
 @startuml mainLogic
 start
-:Init variables;
-
-:Print menu;
+:Init variables
+strangerDiscovered=0
+castleDiscovered=0
+gameFinish=0;
 
 repeat
 
-:input action;
+    :generateActionsMenu;
 
-switch(Action)
-case (fight)
-    :took randomDamage;
-    :got random damage;
+    :input actionChoice;
 
-case (act)
-    :you complement
-    It seems flattered;
-    :DummyHappy=DummyHappy - 1;
-    :you got random damage;
+    switch(actionChoice)
+        case (1)
+            :PRINT "You walked around a bit.";
 
-case (item)
+        case (2)
+            :call SHOP;
 
-    switch(CHOOSE ITEM)
-        case (monster candy +5 hp)
-            if (ItemMC>0) THEN (true)
-                :Health + 5;
-                :ItemMC=ItemMC-1;
-            ELSE
-                :you ran out of this item;
+        case (3)
+            :call MyInfo;
+
+        CASE (4)
+            if (seeDummy=1) then
+                :call BATTLE;
+            endif
+        case (5)
+            if (seeBushes = 1) then
+                :call SEARCHINBUSHES;
+            endif
+        case (6)
+            if (castleDiscovered = 1) then
+                :call CASTLE;
+            endif
+        case (7)
+            if (strangerDiscovered = 1) then
+                :call STRANGER;
             endif
 
-        case (sea tea(+9 hp))
-            if (ItemST>0) THEN (true)
-                :Health + 5;
-                :ItemST=ItemST-1;
-            ELSE
-                :you ran out of this item;
-            endif
-
-        case (Butterscotch-Cinnamon Pie+19 hp)
-            if (ItemBCP>0) THEN (true)
-                :Health + 5;
-                :ItemBCP=ItemBCP-1;
-            ELSE
-                :you ran out of this item;
-            endif
         case (else)
-            :you dont have this item...;
+            :PRINT "You walked around a bit.";
+
     endswitch
 
-case (mercy)
-    if (DummySpare>0) then (true)
-        :DummyName$ is too angry to be spared;
-        :You got random damage;
-    endif
-
-    if (DummySpare=0) then (true)
-        :got XP;
-        :Got gold;
-        :you won!;
-        stop
-    endif
-
-endswitch
-
-if (PlayerCurrentHealth <= 0) then (true)
+if (gameFinish=1) then
     stop
 endif
 
-if (DummyHappy = 0) then (true)
-    :PRINT DummyName$; "is smiling";
-    :DummySpare=DummySpare=-1;
-endif
-
-if (DummyHealth <= 0) then (true)
-    :Got XP;
-    :Got gold;
-    :You win;
+if (PlayerCurrentHealth <= 0) then
     stop
 endif
 
