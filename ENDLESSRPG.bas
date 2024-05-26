@@ -36,7 +36,7 @@ global DummyStrength
 global DummyAgility
 global DummyXP
 ' Game Variables
-GameRound = 1
+GameRound=1
 global strangerDiscovered
 strangerDiscovered=0
 global castleDiscovered
@@ -44,8 +44,8 @@ castleDiscovered=0
 global gameFinish
 gameFinish=0
 'round loop
-PRINT " __         __         __    __   __ "
-PRINT "|_    |\ |  |    \  |     |_    (_    (_  "
+PRINT " __         __        __   __   __ "
+PRINT "|_   |\ |  |  \  |   |_   (_   (_  "
 PRINT "|__  | \|  |__/  |__ |__  __)  __) "
 CALL waitMilliseconds 300
 PRINT " "
@@ -94,7 +94,7 @@ do
     if (seeDummy=1) then
         print "4. Attack "; DummyName$
     end if
-    
+
     if (seeBushes = 1) then
         print "5. Search in bushes"
     end if
@@ -175,7 +175,7 @@ sub generateDummy aDummyIndex
     DummyVitalities(3) = 1
     DummyStrengths(3) = 1
     DummyAgilities(3) = 0
-    DummyNames$(4) = "Anton2012" ' BOSS
+    DummyNames$(4) = "Anton2012" 'BOSS=)
     DummySpares(4) = 2
     DummyHappys(4) = 1
     DummyDialogues$(4) = "ok this is kinda tought but hey dont give up david :P"
@@ -449,8 +449,8 @@ sub SHOPITEMS
             itemPrice=0
             call loadItem itemIndex, itemName$, itemHP, itemPrice
             if (itemPrice > 0) then
-                PRINT itemIndex; ". "; itemName$; 
-                PRINT ". You have: "; PlayerInventoryItemsQuantities(itemIndex); 
+                PRINT itemIndex; ". "; itemName$;
+                PRINT ". You have: "; PlayerInventoryItemsQuantities(itemIndex);
                 PRINT ". It gives "; itemHP; " HP. It costs: "; itemPrice
             end if
         next itemIndex
@@ -458,7 +458,7 @@ sub SHOPITEMS
         INPUT "Choose item to buy:" ;itemChoice
         if (itemChoice=0) then
             exit do
-        else 
+        else
             if (itemChoise > ItemsSize) then
                 Print "Wrong choise"
             else
@@ -489,8 +489,8 @@ sub SHOPARMOR
             armorDF=0
             armorPrice=0
             call loadArmor armorIndex, armorName$, armorDF, armorPrice
-            PRINT armorIndex; ". "; armorName$; 
-            PRINT ". DF: "; armorDF; 
+            PRINT armorIndex; ". "; armorName$;
+            PRINT ". DF: "; armorDF;
             PRINT ". Price "; armorPrice
         next armorIndex
         PRINT "0. back"
@@ -531,8 +531,8 @@ sub SHOPWEAPONS
             weaponATK=0
             weaponPrice=0
             call loadWeapon weaponIndex, weaponName$, weaponATK, weaponPrice
-            PRINT weaponIndex; ". "; weaponName$; 
-            PRINT ". ATK: "; weaponATK; 
+            PRINT weaponIndex; ". "; weaponName$;
+            PRINT ". ATK: "; weaponATK;
             PRINT ". Price "; weaponPrice
         next weaponIndex
         PRINT "0. back"
@@ -572,7 +572,7 @@ sub SEARCHINBUSHES
         if (randInRange(0, 100) < 50) then
             print "You found some berries."
             PlayerInventoryItemsQuantities(6)=PlayerInventoryItemsQuantities(6)+1
-        else 
+        else
             print "You found nothing and went away."
         end if
     end if
