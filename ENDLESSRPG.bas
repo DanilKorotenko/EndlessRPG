@@ -747,19 +747,24 @@ sub ITEM
             PRINT itemIndex; ". "; PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; " gives "; itemHP; " HP"
         end if
     next itemIndex
+    print "0. Exit"
     do
         INPUT "Choose Item:" ;itemChoice
-        itemName$=""
-        itemHP=0
-        itemPrice=0
-        call loadItem itemChoice, itemName$, itemHP, itemPrice
-        IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
-            PlayerCurrentHealth = PlayerCurrentHealth + itemHP
-            PRINT "Your Health ";PlayerCurrentHealth
-            PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)-1
+        if (itemChoice=0) then
             exit do
-        ELSE
-            PRINT "you ran out of this item"
+        else
+            itemName$=""
+            itemHP=0
+            itemPrice=0
+            call loadItem itemChoice, itemName$, itemHP, itemPrice
+            IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
+                PlayerCurrentHealth = PlayerCurrentHealth + itemHP
+                PRINT "Your Health ";PlayerCurrentHealth
+                PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)-1
+                exit do
+            ELSE
+                PRINT "you ran out of this item"
+            end if
         end if
     loop until true
     print
