@@ -658,9 +658,23 @@ sub CASTLE
     print
 end sub
 sub FINALINCASTLE
-    Print "Congratulations! You just finished this game, and found good ending!"
-    Print "Thank you!"
-    gameFinish=1
+    if PlayerKills>=20 then
+        print "well youve killed everyone so theres no one to murder"
+        print "so the only thing i can do is FIGHT you"
+        DummyNames$ = "Anton"
+        DummySpares = 2
+        DummyHappys = 999
+        DummyDialogues$ = "I am the one who knows Victoria's secret..."
+        DummyVitalities = 1
+        DummyStrengths = 4
+        DummyAgilities = 1
+    else
+        if Playerkills<=3 then
+            Print "Congratulations! You just finished this game, and found the good ending!"
+            Print "Thank you!"
+            gameFinish=1
+        end if
+    end if
 end sub
 sub STRANGER
     ' if player has artefact
