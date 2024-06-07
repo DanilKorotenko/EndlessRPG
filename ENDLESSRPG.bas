@@ -12,6 +12,7 @@ WeaponsSize = 4
 global PlayerCurrentHealth
 global PlayerMaxHealth
 global PlayerLevel
+global PlayerKills
 global PlayerXP
 global PlayerGold
 global PlayerCurrentArmor ' an index of current player armor from armors array
@@ -729,6 +730,7 @@ sub BATTLE
             DummySpare=DummySpare=-1
         end if
         if DummyHealth <= 0 then
+        PlayerKills=PlayerKills+1
             PlayerXP=PlayerXP+DummyXP
             PlayerGold = PlayerGold + DummyGold
             PRINT "YOU WON!"
