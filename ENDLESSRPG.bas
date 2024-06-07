@@ -499,13 +499,6 @@ PRINT " "
     loop until true
 end sub
 sub SHOPITEMS
-' PRINT " __        _    _ "
-' PRINT "(_   |_|  /  \  |_) "
-' PRINT "__) |  |  \_/  |   "
-' PRINT " ITEMS "
-' PRINT " "
-' PRINT " "
-'     PRINT "HI! Welcome to my shop where you can buy ITEMS, ARMOR and WEAPONS"
     do
         PRINT "Your gold: "; PlayerGold
         PRINT
