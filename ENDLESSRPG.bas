@@ -63,13 +63,13 @@ PRINT "Lead Programer"
 CALL waitMilliseconds 1000
 do
     print
-    print "you are in the forest."
+    print "you are in a forest."
     seeDummy=0
     seeBushes = 0
     if (randInRange(0, 100) < 20) then
         randomDummy=randInRange(1,3)
         call generateDummy randomDummy
-        print "You see "; DummyName$; " Is going."
+        print "You see "; DummyName$; " Is walking around."
         seeDummy=1
     else
         if (randInRange(0, 100) < 20) then
@@ -81,7 +81,7 @@ do
                 castleDiscovered = 1
             else
                 if (randInRange(0, 100) < 20) and (strangerDiscovered =0) then
-                    print "You met stranger."
+                    print "You meet the stranger."
                     strangerDiscovered=1
                 end if
             end if
@@ -104,7 +104,7 @@ do
     if (strangerDiscovered = 1) then
         print "7. Go to stranger and talk to him"
     end if
-    input "Action choise:"; actionChoice
+    input "Action choice:"; actionChoice
     SELECT CASE actionChoice
         CASE 1
             PRINT "You walked around a bit."
@@ -171,14 +171,14 @@ sub generateDummy aDummyIndex
     DummyNames$(3) = "Moldsmal"
     DummySpares(3) = 2
     DummyHappys(3) = 1
-    DummyDialogues$(3) = "OK idk what to write here i dont even know what he says"
+    DummyDialogues$(3) = "Blurp blop"
     DummyVitalities(3) = 1
     DummyStrengths(3) = 1
     DummyAgilities(3) = 0
-    DummyNames$(4) = "Anton2012" 'BOSS=)
+    DummyNames$(4) = "Skeleton"
     DummySpares(4) = 2
     DummyHappys(4) = 1
-    DummyDialogues$(4) = "ok this is kinda tought but hey dont give up david :P"
+    DummyDialogues$(4) = "Mwuahaha!"
     DummyVitalities(4) = 1
     DummyStrengths(4) = 1
     DummyAgilities(4) = 0
@@ -247,13 +247,13 @@ sub loadArmor anArmorIndex, byref anArmorName$, byref anArmorDF, byref anArmorPr
     ArmorNames$(1) = "Nothing"'"Bandage"
     ArmorPrices(1) = 0 '1
     ArmorDFs(1) = 0 '1
-    ArmorNames$(2) = "Light shield"
+    ArmorNames$(2) = "Bandana"
     ArmorPrices(2) = 5
     ArmorDFs(2) = 5
-    ArmorNames$(3) = "Medium shield"
+    ArmorNames$(3) = "Jackpot Jacket"
     ArmorPrices(3) = 10
     ArmorDFs(3) = 10
-    ArmorNames$(4) = "Hard Shield"
+    ArmorNames$(4) = "Royal Armor"
     ArmorPrices(4) = 15
     ArmorDFs(4) = 15
 ' fill output arguments
@@ -265,13 +265,13 @@ sub loadWeapon aWeaponIndex, byref aWeaponName$, byref aWeaponATK, byref aWeapon
     WeaponNames$(1) = "Nothing"'"Stick"
     WeaponPrices(1) = 0 '1
     WeaponATKs(1) = 0 '2
-    WeaponNames$(2) = "Light Weapon"
+    WeaponNames$(2) = "Toy Knife"
     WeaponPrices(2) = 5
     WeaponATKs(2) = 5
-    WeaponNames$(3) = "Medium Weapon"
+    WeaponNames$(3) = "Krystal bat"
     WeaponPrices(3) = 10
     WeaponATKs(3) = 10
-    WeaponNames$(4) = "Heavy Weapon"
+    WeaponNames$(4) = "Real Knife"
     WeaponPrices(4) = 15
     WeaponATKs(4) = 15
 ' fill output arguments
@@ -402,7 +402,7 @@ end sub
 ' SHOP
 sub SHOP
 PRINT " __        _    _ "
-PRINT "(_   |_|  /  \  |_) "
+PRINT "(_  |__|  / \  |_) "
 PRINT "__) |  |  \_/  |   "
 PRINT " "
 PRINT " "
@@ -502,7 +502,7 @@ sub SHOPARMOR
                 PRINT "You already equipped this armor"
             else
                 if (armorChoice > ArmorsSize) then
-                    PRINT "Wrong choise"
+                    PRINT "Wrong choice"
                 else
                     armorName$=""
                     armorDF=0
@@ -819,3 +819,4 @@ sub DummyInfo
     print "Gold: "; DummyGold
     print
 end sub
+
