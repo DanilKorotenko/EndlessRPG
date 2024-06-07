@@ -677,22 +677,41 @@ sub FINALINCASTLE
     end if
 end sub
 sub STRANGER
-    ' if player has artefact
-    if (PlayerInventoryItemsQuantities(7)>0) then
-        print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
-        print "You has a key from castle now."
-        print "You know castle location now."
-            print "You went away from stranger"
-        PlayerInventoryItemsQuantities(8)=1
-        PlayerInventoryItemsQuantities(7)=0
-        castleDiscovered=1
-    else
-        if (PlayerInventoryItemsQuantities(8)>0) then
-            Print "I already gave you a key. Why did you come back?"
-            print "You went away from stranger"
+    castleDiscovered=1
+    if PlayerKills>=20 then
+        if (PlayerInventoryItemsQuantities(7)=0) then
+            PRINT "Stranger:H-hey!i s-see that you've got a lot of kills!"
+            PRINT "H-Hey no need t-to be angry how i-i-i uhh give you the key right away!"
+            PRINT "Y-yes,yes ill d-do it for free!"
+            print "..."
+            PlayerInventoryItemsQuantities(8)=1
+            print "you walked away"
         else
-            print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+            PRINT "Stranger:oh i see t-that you've got a lot of kills!"
+            print "uh hey h-how about ou give me the artifact a-and i will give you the k-key?"
+            print "h-how does that sound?"
+            print "..."
+            PlayerInventoryItemsQuantities(8)=1
+            PlayerInventoryItemsQuantities(7)=0
+        end if
+    else
+        ' if player has artefact
+        if (PlayerInventoryItemsQuantities(7)>0) then
+            print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
+            print "You have a key from castle now."
+            print "You know castle location now."
             print "You went away from stranger"
+            PlayerInventoryItemsQuantities(8)=1
+            PlayerInventoryItemsQuantities(7)=0
+            castleDiscovered=1
+        else
+            if (PlayerInventoryItemsQuantities(8)>0) then
+                Print "I already gave you a key. Why did you come back?"
+                print "You went away from stranger"
+            else
+                print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+                print "You went away from stranger"
+            end if
         end if
     end if
     print
