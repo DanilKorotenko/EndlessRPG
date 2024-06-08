@@ -68,7 +68,7 @@ do
     seeDummy=0
     seeBushes = 0
     if (randInRange(0, 100) < 20) then
-        randomDummy=randInRange(1,3)
+        randomDummy=randInRange(1,4)
         call generateDummy randomDummy
         print "You see "; DummyName$; " Is walking around."
         seeDummy=1
