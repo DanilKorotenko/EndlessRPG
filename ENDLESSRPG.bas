@@ -12,6 +12,7 @@ WeaponsSize = 4
 global PlayerCurrentHealth
 global PlayerMaxHealth
 global PlayerLevel
+global PlayerKills
 global PlayerXP
 global PlayerGold
 global PlayerCurrentArmor ' an index of current player armor from armors array
@@ -36,7 +37,6 @@ global DummyStrength
 global DummyAgility
 global DummyXP
 ' Game Variables
-TestNum=-42692012 'test num is ONLY for testing use it anywhere the game is going to break
 GameRound=1
 global strangerDiscovered
 strangerDiscovered=0
@@ -93,10 +93,11 @@ do
     print "2. Go to trader"
     print "3. Info about me"
     print "4. Save"
-    print "5. Load(dosent work)"
-        if (seeDummy=1) then
+    print "5. Load"
+    if (seeDummy=1) then
         print "6. Attack "; DummyName$
     end if
+
     if (seeBushes = 1) then
         print "7. Search in bushes"
     end if
@@ -144,11 +145,8 @@ PRINT #1, DummyXP
 PRINT #1, strangerDiscovered
 PRINT #1, castleDiscovered
 PRINT #1, gameFinish
+PRINT #1, PlayerKills
 CLOSE #1
-        CASE 6
-            if (seeDummy=1) then
-                call BATTLE
-            end if
         CASE 5
 OPEN "C:\Users\Public\Documents\save_file.txt" FOR INPUT AS #1
 INPUT #1, ItemsSize
@@ -179,7 +177,12 @@ INPUT #1, DummyXP
 INPUT #1, strangerDiscovered
 INPUT #1, castleDiscovered
 INPUT #1, gameFinish
+INPUT #1, PlayerKills
 CLOSE #1
+        CASE 6
+            if (seeDummy=1) then
+                call BATTLE
+            end if
         case 7
             if (seeBushes = 1) then
                 call SEARCHINBUSHES
@@ -218,34 +221,41 @@ sub initPlayerVariables
     PlayerCurrentWeapon = 1 'Stick
 end sub
 sub generateDummy aDummyIndex
-    DummyNames$(1) = "Froggit"
+    DummyNames$(1) = "Temmie"
     DummySpares(1) = 1
     DummyHappys(1) = 1
-    DummyDialogues$(1) = "Ribbit,Ribbit"
-    DummyVitalities(1) = 1
+    DummyDialogues$(1) = "Halo humen!"
+    DummyVitalities(1) = 2
     DummyStrengths(1) = 1
     DummyAgilities(1) = 0
-    DummyNames$(2) = "Vegetiod"
-    DummySpares(2) = 2
+    DummyNames$(2) = "Froggit"
+    DummySpares(2) = 1
     DummyHappys(2) = 1
-    DummyDialogues$(2) = "Farmed Locally, Very Locally"
+    DummyDialogues$(2) = "Ribbit,Ribbit"
     DummyVitalities(2) = 1
     DummyStrengths(2) = 1
     DummyAgilities(2) = 0
-    DummyNames$(3) = "Moldsmal"
+    DummyNames$(3) = "Vegetiod"
     DummySpares(3) = 2
     DummyHappys(3) = 1
-    DummyDialogues$(3) = "blurp blop"
+    DummyDialogues$(3) = "Farmed Locally, Very Locally"
     DummyVitalities(3) = 1
     DummyStrengths(3) = 1
     DummyAgilities(3) = 0
-    DummyNames$(4) = "Toriel"
+    DummyNames$(4) = "Moldsmal"
     DummySpares(4) = 2
     DummyHappys(4) = 1
-    DummyDialogues$(4) = "..."
+    DummyDialogues$(4) = "Blurp blop"
     DummyVitalities(4) = 1
     DummyStrengths(4) = 1
     DummyAgilities(4) = 0
+    DummyNames$(5) = "Skeleton"
+    DummySpares(5) = 2
+    DummyHappys(5) = 1
+    DummyDialogues$(5) = "Mwuahaha!"
+    DummyVitalities(5) = 1
+    DummyStrengths(5) = 2
+    DummyAgilities(5) = 0
     DummySpare = DummySpares(aDummyIndex)
     DummyHappy = DummyHappys(aDummyIndex)
     DummyName$ = DummyNames$(aDummyIndex)
@@ -311,13 +321,13 @@ sub loadArmor anArmorIndex, byref anArmorName$, byref anArmorDF, byref anArmorPr
     ArmorNames$(1) = "Nothing"'"Bandage"
     ArmorPrices(1) = 0 '1
     ArmorDFs(1) = 0 '1
-    ArmorNames$(2) = "Light shield"
+    ArmorNames$(2) = "Bandana"
     ArmorPrices(2) = 5
     ArmorDFs(2) = 5
-    ArmorNames$(3) = "Medium shield"
+    ArmorNames$(3) = "Jackpot Jacket"
     ArmorPrices(3) = 10
     ArmorDFs(3) = 10
-    ArmorNames$(4) = "Hard Shield"
+    ArmorNames$(4) = "Royal Armor"
     ArmorPrices(4) = 15
     ArmorDFs(4) = 15
 ' fill output arguments
@@ -329,13 +339,13 @@ sub loadWeapon aWeaponIndex, byref aWeaponName$, byref aWeaponATK, byref aWeapon
     WeaponNames$(1) = "Nothing"'"Stick"
     WeaponPrices(1) = 0 '1
     WeaponATKs(1) = 0 '2
-    WeaponNames$(2) = "Light Weapon"
+    WeaponNames$(2) = "Toy Knife"
     WeaponPrices(2) = 5
     WeaponATKs(2) = 5
-    WeaponNames$(3) = "Medium Weapon"
+    WeaponNames$(3) = "Krystal bat"
     WeaponPrices(3) = 10
     WeaponATKs(3) = 10
-    WeaponNames$(4) = "Heavy Weapon"
+    WeaponNames$(4) = "Real Knife"
     WeaponPrices(4) = 15
     WeaponATKs(4) = 15
 ' fill output arguments
@@ -559,7 +569,7 @@ sub SHOPARMOR
                 PRINT "You already equipped this armor"
             else
                 if (armorChoice > ArmorsSize) then
-                    PRINT "Wrong choise"
+                    PRINT "Wrong choice"
                 else
                     armorName$=""
                     armorDF=0
@@ -655,27 +665,77 @@ sub CASTLE
     print
 end sub
 sub FINALINCASTLE
-    Print "Congratulations! You just finished this game, and found good ending!"
-    Print "Thank you!"
-    gameFinish=1
+    if PlayerKills>=20 then
+        print "well youve killed everyone so theres no one to murder"
+        print "so the only thing i can do is FIGHT you"
+        DummyNames$ = "Anton"
+        DummySpares = 2
+        DummyHappys = 999
+        DummyDialogues$ = "I am the one who knows Victoria's secret..."
+        DummyVitalities = 1
+        DummyStrengths = 4
+        DummyAgilities = 1
+        call BATTLE
+    else
+        if Playerkills<=3 then
+            Print "Congratulations! You just finished this game, and found the good ending!"
+            Print "Thank you!"
+            gameFinish=1
+        end if
+    end if
 end sub
 sub STRANGER
-    ' if player has artefact
-    if (PlayerInventoryItemsQuantities(7)>0) then
-        print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
-        print "You has a key from castle now."
-        print "You know castle location now."
-            print "You went away from stranger"
-        PlayerInventoryItemsQuantities(8)=1
-        PlayerInventoryItemsQuantities(7)=0
-        castleDiscovered=1
-    else
-        if (PlayerInventoryItemsQuantities(8)>0) then
-            Print "I already gave you a key. Why did you come back?"
-            print "You went away from stranger"
+    castleDiscovered=1
+    if PlayerKills>=20 then
+        if (PlayerInventoryItemsQuantities(7)=0) then
+            PRINT "Stranger:H-hey!i s-see that you've got a lot of kills!"
+            PRINT "H-Hey no need t-to be angry how i-i-i uhh give you the key right away!"
+            PRINT "Y-yes,yes ill d-do it for free!"
+            print "..."
+            PlayerInventoryItemsQuantities(8)=1
+            print "you walked away"
         else
-            print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+            PRINT "Stranger:oh i see t-that you've got a lot of kills!"
+            print "uh hey h-how about you give me the artifact a-and i will give you the k-key?"
+            print "h-how does that sound?"
+            print "..."
+            PlayerInventoryItemsQuantities(8)=1
+            PlayerInventoryItemsQuantities(7)=0
+        end if
+                    if (PlayerInventoryItemsQuantities(8)>0) then
+                Print "I-i already gave you t-the key. W-why did you come back?"
+                print "Well ill just accept my fate..."
+                CALL waitMilliseconds 300
+                print "..."
+                CALL waitMilliseconds 300
+                print "..."
+                print "YOU WON!"
+                PRINT "well we didn't gain any XP..."
+                PRINT "but we can always gain more=)"
+                CALL waitMilliseconds 100
+                PlayerKills=PlayerKills+1
+            else
+                print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+                print "You went away from stranger"
+            end if
+    else
+        ' if player has artefact
+        if (PlayerInventoryItemsQuantities(7)>0) then
+            print "Stranger: Oh! I see you found my artefact! Thank you! For this, I give you a key. This key opens a door of ancient castle."
+            print "You have a key from castle now."
+            print "You know castle location now."
             print "You went away from stranger"
+            PlayerInventoryItemsQuantities(8)=1
+            PlayerInventoryItemsQuantities(7)=0
+            castleDiscovered=1
+        else
+            if (PlayerInventoryItemsQuantities(8)>0) then
+                Print "I already gave you a key. Why did you come back?"
+                print "You went away from stranger"
+            else
+                print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+                print "You went away from stranger"
+            end if
         end if
     end if
     print
@@ -720,6 +780,7 @@ sub BATTLE
             DummySpare=DummySpare=-1
         end if
         if DummyHealth <= 0 then
+        PlayerKills=PlayerKills+1
             PlayerXP=PlayerXP+DummyXP
             PlayerGold = PlayerGold + DummyGold
             PRINT "YOU WON!"
@@ -804,19 +865,24 @@ sub ITEM
             PRINT itemIndex; ". "; PlayerInventoryItemsQuantities(itemIndex); " "; itemName$; " gives "; itemHP; " HP"
         end if
     next itemIndex
+    print "0. Exit"
     do
         INPUT "Choose Item:" ;itemChoice
-        itemName$=""
-        itemHP=0
-        itemPrice=0
-        call loadItem itemChoice, itemName$, itemHP, itemPrice
-        IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
-            PlayerCurrentHealth = PlayerCurrentHealth + itemHP
-            PRINT "Your Health ";PlayerCurrentHealth
-            PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)-1
+        if (itemChoice=0) then
             exit do
-        ELSE
-            PRINT "you ran out of this item"
+        else
+            itemName$=""
+            itemHP=0
+            itemPrice=0
+            call loadItem itemChoice, itemName$, itemHP, itemPrice
+            IF PlayerInventoryItemsQuantities(itemChoice)>0 THEN
+                PlayerCurrentHealth = PlayerCurrentHealth + itemHP
+                PRINT "Your Health ";PlayerCurrentHealth
+                PlayerInventoryItemsQuantities(itemChoice)=PlayerInventoryItemsQuantities(itemChoice)-1
+                exit do
+            ELSE
+                PRINT "you ran out of this item"
+            end if
         end if
     loop until true
     print
@@ -871,4 +937,3 @@ sub DummyInfo
     print "Gold: "; DummyGold
     print
 end sub
-
