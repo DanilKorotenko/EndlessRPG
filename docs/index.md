@@ -18,16 +18,19 @@ More enemies and bosses
 
 And that's all i have planned!
 
-
+ 
 CREDITS:
 
 
 David Vidal Garcia
+
 Play-testing/Balancing help
 
 Danil Korotenko Pavlo
+
+
 Programming help
 
-Anton Korotenko Danilovitch
+Anton Korotenko Danilovitch   
 Lead programmer
 
