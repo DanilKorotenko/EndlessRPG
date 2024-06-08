@@ -68,7 +68,7 @@ do
     seeDummy=0
     seeBushes = 0
     if (randInRange(0, 100) < 20) then
-        randomDummy=randInRange(1,3)
+        randomDummy=randInRange(1,4)
         call generateDummy randomDummy
         print "You see "; DummyName$; " Is walking around."
         seeDummy=1
@@ -669,12 +669,12 @@ sub FINALINCASTLE
         print "well youve killed everyone so theres no one to murder"
         print "so the only thing i can do is FIGHT you"
         DummyNames$ = "Anton"
-        DummySpares = 2
-        DummyHappys = 999
+        DummySpare = 2
+        DummyHappy = 999
         DummyDialogues$ = "I am the one who knows Victoria's secret..."
-        DummyVitalities = 1
-        DummyStrengths = 4
-        DummyAgilities = 1
+        DummyVitality = 1
+        DummyStrength = 4
+        DummyAgility = 1
         call BATTLE
     else
         if Playerkills<=3 then
@@ -777,7 +777,6 @@ sub BATTLE
         end if
         if DummyHappy = 0 then
             PRINT DummyName$; " is smiling"
-            DummySpare=DummySpare=-1
         end if
         if DummyHealth <= 0 then
         PlayerKills=PlayerKills+1
@@ -888,7 +887,7 @@ sub ITEM
     print
 end sub
 sub MERCY
-    IF DummySpare>0 THEN
+    IF DummyHappy>0 THEN
         armorName$=""
         armorDF=0
         armorPrice=0
@@ -903,6 +902,10 @@ sub MERCY
         PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
         PRINT "Your Health "; PlayerCurrentHealth
         print
+        else
+        IF DummyHappy=0 then
+                    DummySpare=DummySpare=-1
+    end if
     end if
 end sub
 sub MyInfo
