@@ -669,12 +669,13 @@ sub FINALINCASTLE
         print "well youve killed everyone so theres no one to murder"
         print "so the only thing i can do is FIGHT you"
         DummyNames$ = "Anton"
-        DummySpares = 2
-        DummyHappys = 999
+        DummySpare = 2
+        DummyHappy = 999
         DummyDialogues$ = "I am the one who knows Victoria's secret..."
-        DummyVitalities = 1
-        DummyStrengths = 4
-        DummyAgilities = 1
+        DummyVitality = 1
+        DummyStrength = 4
+        DummyAgility = 1
+        call BATTLE
     else
         if Playerkills<=3 then
             Print "Congratulations! You just finished this game, and found the good ending!"
@@ -700,6 +701,23 @@ sub STRANGER
             print "..."
             PlayerInventoryItemsQuantities(8)=1
             PlayerInventoryItemsQuantities(7)=0
+        end if
+        
+        if (PlayerInventoryItemsQuantities(8)>0) then
+            Print "I-i already gave you t-the key. W-why did you come back?"
+            print "Well ill just accept my fate..."
+            CALL waitMilliseconds 300
+            print "..."
+            CALL waitMilliseconds 300
+            print "..."
+            print "YOU WON!"
+            PRINT "well we didn't gain any XP..."
+            PRINT "but we can always gain more=)"
+            CALL waitMilliseconds 100
+            PlayerKills=PlayerKills+1
+        else
+            print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+            print "You went away from stranger"
         end if
     else
         ' if player has artefact
@@ -760,7 +778,6 @@ sub BATTLE
         end if
         if DummyHappy = 0 then
             PRINT DummyName$; " is smiling"
-            DummySpare=DummySpare=-1
         end if
         if DummyHealth <= 0 then
         PlayerKills=PlayerKills+1
@@ -871,7 +888,7 @@ sub ITEM
     print
 end sub
 sub MERCY
-    IF DummySpare>0 THEN
+    IF DummyHappy>0 THEN
         armorName$=""
         armorDF=0
         armorPrice=0
@@ -886,6 +903,10 @@ sub MERCY
         PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
         PRINT "Your Health "; PlayerCurrentHealth
         print
+    else
+        IF DummyHappy=0 then
+            DummySpare=DummySpare=-1
+        end if
     end if
 end sub
 sub MyInfo
