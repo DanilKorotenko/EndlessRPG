@@ -695,7 +695,7 @@ sub STRANGER
             print "you walked away"
         else
             PRINT "Stranger:oh i see t-that you've got a lot of kills!"
-            print "uh hey h-how about ou give me the artifact a-and i will give you the k-key?"
+            print "uh hey h-how about you give me the artifact a-and i will give you the k-key?"
             print "h-how does that sound?"
             print "..."
             PlayerInventoryItemsQuantities(8)=1
@@ -920,4 +920,3 @@ sub DummyInfo
     print "Gold: "; DummyGold
     print
 end sub
-
