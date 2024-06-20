@@ -9,6 +9,8 @@ ArmorsSize = 4
 global WeaponsSize
 WeaponsSize = 4
 ' Player Variables
+PlayerGuesses=0
+PlayerInputNum=0
 global PlayerCurrentHealth
 global PlayerMaxHealth
 global PlayerLevel
@@ -37,6 +39,7 @@ global DummyStrength
 global DummyAgility
 global DummyXP
 ' Game Variables
+RandomAns=0
 GameRound=1
 global strangerDiscovered
 strangerDiscovered=0
@@ -711,7 +714,7 @@ sub STRANGER
                 print "..."
                 print "YOU WON!"
                 PRINT "well we didn't gain any XP..."
-                PRINT "but we can always gain more=)"
+                PRINT "but we can always gain more"
                 CALL waitMilliseconds 100
                 PlayerKills=PlayerKills+1
             else
@@ -940,3 +943,25 @@ sub DummyInfo
     print "Gold: "; DummyGold
     print
 end sub
+sub Quiz
+end sub
+sub Game
+    DO
+        PRINT "Welcome to the funny number game!"
+        RandomAns=int( rnd( 1) *10)
+
+        DO
+            INPUT "select a number from 1 to 10!:" ; PlayerInputNum
+
+            IF PlayerInputNum=RandomAns THEN
+                PRINT "CONGRATULATIONS!YOU WON!"
+            END
+    END IF
+
+    IF PlayerInputNum>RandomAns THEN PRINT "Your number is too big"
+    end IF
+    IF PlayerInputNum<RandomAns THEN PRINT "Your number is too small"
+    end IF
+LOOP UNTIL PlayerInputNum=RandomAns
+end sub
+
