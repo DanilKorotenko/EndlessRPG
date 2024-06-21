@@ -39,6 +39,7 @@ global DummyStrength
 global DummyAgility
 global DummyXP
 ' Game Variables
+Num=0'for random miscalenius thing
 RandomAns=0
 GameRound=1
 global strangerDiscovered
@@ -734,7 +735,20 @@ sub STRANGER
         else
             if (PlayerInventoryItemsQuantities(8)>0) then
                 Print "I already gave you a key. Why did you come back?"
-                print "You went away from stranger"
+                print "Hmmm how about we play a game?"
+                print "1.Yes"
+                print "2.No"
+                input "Choose what to do:";Num
+                SELECT CASE
+                CASE 1
+                PRINT "Ok so let me tell you the rules"
+                print "You get 4 tries to guess the number im thinking of"
+                CASE 2
+                PRINT "Oh well"
+                print "You went away from the stranger"
+                CASE ELSE
+            PRINT "NULL_NAN"
+    END SELECT
             else
                 print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
                 print "You went away from stranger"
@@ -959,4 +973,18 @@ sub Game
     LOOP UNTIL PlayerInputNum=RandomAns
     PRINT "CONGRATULATIONS!YOU WON!"
 end sub
-
+sub printWithDelay stringToPrint$
+    for i=0 to len(stringToPrint$)
+        print mid$(stringToPrint$, i, 1);
+        call waitSecond
+    next i
+end sub
+sub waitSecond
+    seconds = time$("seconds")
+    secondsNow = seconds
+    secondsDiff = secondsNow - seconds
+    do
+        secondsNow = time$("seconds")
+        secondsDiff = secondsNow - seconds
+    loop until secondsDiff >= 1
+end sub
