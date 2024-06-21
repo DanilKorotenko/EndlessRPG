@@ -946,22 +946,17 @@ end sub
 sub Quiz
 end sub
 sub Game
+    PRINT "Welcome to the funny number game!"
+    RandomAns=int(rnd(1)*10)
     DO
-        PRINT "Welcome to the funny number game!"
-        RandomAns=int( rnd( 1) *10)
-
-        DO
-            INPUT "select a number from 1 to 10!:" ; PlayerInputNum
-
-            IF PlayerInputNum=RandomAns THEN
-                PRINT "CONGRATULATIONS!YOU WON!"
-            END
-    END IF
-
-    IF PlayerInputNum>RandomAns THEN PRINT "Your number is too big"
-    end IF
-    IF PlayerInputNum<RandomAns THEN PRINT "Your number is too small"
-    end IF
-LOOP UNTIL PlayerInputNum=RandomAns
+        INPUT "select a number from 1 to 10!:" ; PlayerInputNum
+        IF PlayerInputNum>RandomAns THEN
+            PRINT "Your number is too big"
+        end IF
+        IF PlayerInputNum<RandomAns THEN
+            PRINT "Your number is too small"
+        end IF
+    LOOP UNTIL PlayerInputNum=RandomAns
+    PRINT "CONGRATULATIONS!YOU WON!"
 end sub
 
