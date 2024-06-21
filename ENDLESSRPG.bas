@@ -672,6 +672,7 @@ sub FINALINCASTLE
     if PlayerKills>=20 then
         print "well youve killed everyone so theres no one to murder"
         print "so the only thing i can do is FIGHT you"
+        call printWithDelay "Pasta lavista"
         DummyNames$ = "Anton"
         DummySpare = 2
         DummyHappy = 999
@@ -738,11 +739,14 @@ sub STRANGER
                 print "Hmmm how about we play a game?"
                 print "1.Yes"
                 print "2.No"
-                input "Choose what to do:";Num
-                SELECT CASE
+                INPUT "Chioce:"; choice
+                SELECT CASE choice
                 CASE 1
                 PRINT "Ok so let me tell you the rules"
                 print "You get 4 tries to guess the number im thinking of"
+                print "if you win you'll get 25 gold"
+                print "but if you loose i'll take 40 gold from you"
+                CALL Game
                 CASE 2
                 PRINT "Oh well"
                 print "You went away from the stranger"
@@ -960,18 +964,28 @@ end sub
 sub Quiz
 end sub
 sub Game
+PlayerGuesses=4
     PRINT "Welcome to the funny number game!"
     RandomAns=int(rnd(1)*10)
     DO
         INPUT "select a number from 1 to 10!:" ; PlayerInputNum
         IF PlayerInputNum>RandomAns THEN
             PRINT "Your number is too big"
+            PlayerGuesses=PlayerGuesses-1
         end IF
         IF PlayerInputNum<RandomAns THEN
             PRINT "Your number is too small"
+            PlayerGuesses=PlayerGuesses-1
         end IF
+        IF PlayerGuesses<=0 then
+        print "STRANGER:"
+        PRINT "Welp you win some you loose some but today i won"
+        PlayerGold=PlayerGold-40
+        PlayerGuesses=4
+        END IF
     LOOP UNTIL PlayerInputNum=RandomAns
     PRINT "CONGRATULATIONS!YOU WON!"
+    PlayerGold=PlayerGold+25
 end sub
 sub printWithDelay stringToPrint$
     for i=0 to len(stringToPrint$)
