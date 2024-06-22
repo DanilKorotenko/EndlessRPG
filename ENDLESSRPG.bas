@@ -9,6 +9,8 @@ ArmorsSize = 4
 global WeaponsSize
 WeaponsSize = 4
 ' Player Variables
+PlayerGuesses=0
+PlayerInputNum=0
 global PlayerCurrentHealth
 global PlayerMaxHealth
 global PlayerLevel
@@ -37,6 +39,8 @@ global DummyStrength
 global DummyAgility
 global DummyXP
 ' Game Variables
+Num=0'for random miscalenius thing
+RandomAns=0
 GameRound=1
 global strangerDiscovered
 strangerDiscovered=0
@@ -668,6 +672,7 @@ sub FINALINCASTLE
     if PlayerKills>=20 then
         print "well youve killed everyone so theres no one to murder"
         print "so the only thing i can do is FIGHT you"
+        call printWithDelay "Pasta lavista"
         DummyNames$ = "Anton"
         DummySpare = 2
         DummyHappy = 999
@@ -702,23 +707,22 @@ sub STRANGER
             PlayerInventoryItemsQuantities(8)=1
             PlayerInventoryItemsQuantities(7)=0
         end if
-        
-        if (PlayerInventoryItemsQuantities(8)>0) then
-            Print "I-i already gave you t-the key. W-why did you come back?"
-            print "Well ill just accept my fate..."
-            CALL waitMilliseconds 300
-            print "..."
-            CALL waitMilliseconds 300
-            print "..."
-            print "YOU WON!"
-            PRINT "well we didn't gain any XP..."
-            PRINT "but we can always gain more=)"
-            CALL waitMilliseconds 100
-            PlayerKills=PlayerKills+1
-        else
-            print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
-            print "You went away from stranger"
-        end if
+                    if (PlayerInventoryItemsQuantities(8)>0) then
+                Print "I-i already gave you t-the key. W-why did you come back?"
+                print "Well ill just accept my fate..."
+                CALL waitMilliseconds 300
+                print "..."
+                CALL waitMilliseconds 300
+                print "..."
+                print "YOU WON!"
+                PRINT "well we didn't gain any XP..."
+                PRINT "but we can always gain more"
+                CALL waitMilliseconds 100
+                PlayerKills=PlayerKills+1
+            else
+                print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
+                print "You went away from stranger"
+            end if
     else
         ' if player has artefact
         if (PlayerInventoryItemsQuantities(7)>0) then
@@ -732,7 +736,23 @@ sub STRANGER
         else
             if (PlayerInventoryItemsQuantities(8)>0) then
                 Print "I already gave you a key. Why did you come back?"
-                print "You went away from stranger"
+                print "Hmmm how about we play a game?"
+                print "1.Yes"
+                print "2.No"
+                INPUT "Chioce:"; choice
+                SELECT CASE choice
+                CASE 1
+                PRINT "Ok so let me tell you the rules"
+                print "You get 4 tries to guess the number im thinking of"
+                print "if you win you'll get 25 gold"
+                print "but if you loose i'll take 40 gold from you"
+                CALL Game
+                CASE 2
+                PRINT "Oh well"
+                print "You went away from the stranger"
+                CASE ELSE
+            PRINT "NULL_NAN"
+    END SELECT
             else
                 print "Stranger: I lost my artefact somewhere in bushes. Could you please find it for me?"
                 print "You went away from stranger"
@@ -903,10 +923,10 @@ sub MERCY
         PlayerCurrentHealth=PlayerCurrentHealth-RandomDamage
         PRINT "Your Health "; PlayerCurrentHealth
         print
-    else
+        else
         IF DummyHappy=0 then
-            DummySpare=DummySpare=-1
-        end if
+                    DummySpare=DummySpare=-1
+    end if
     end if
 end sub
 sub MyInfo
@@ -940,4 +960,45 @@ sub DummyInfo
     print "DF: "; minDummyDF(); "-"; maxDummyDF()
     print "Gold: "; DummyGold
     print
+end sub
+sub Quiz
+end sub
+sub Game
+PlayerGuesses=4
+    PRINT "Welcome to the funny number game!"
+    RandomAns=int(rnd(1)*10)
+    DO
+        INPUT "select a number from 1 to 10!:" ; PlayerInputNum
+        IF PlayerInputNum>RandomAns THEN
+            PRINT "Your number is too big"
+            PlayerGuesses=PlayerGuesses-1
+        end IF
+        IF PlayerInputNum<RandomAns THEN
+            PRINT "Your number is too small"
+            PlayerGuesses=PlayerGuesses-1
+        end IF
+        IF PlayerGuesses<=0 then
+        print "STRANGER:"
+        PRINT "Welp you win some you loose some but today i won"
+        PlayerGold=PlayerGold-40
+        PlayerGuesses=4
+        END IF
+    LOOP UNTIL PlayerInputNum=RandomAns
+    PRINT "CONGRATULATIONS!YOU WON!"
+    PlayerGold=PlayerGold+25
+end sub
+sub printWithDelay stringToPrint$
+    for i=0 to len(stringToPrint$)
+        print mid$(stringToPrint$, i, 1);
+        call waitSecond
+    next i
+end sub
+sub waitSecond
+    seconds = time$("seconds")
+    secondsNow = seconds
+    secondsDiff = secondsNow - seconds
+    do
+        secondsNow = time$("seconds")
+        secondsDiff = secondsNow - seconds
+    loop until secondsDiff >= 1
 end sub
